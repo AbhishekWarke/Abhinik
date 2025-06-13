@@ -1,0 +1,128 @@
+.manage-contract {
+  padding: 40px 0;
+  background-color: #f9f9f9;
+}
+
+.manage-contract .container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.manage-contract h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.manage-contract p {
+  margin-bottom: 30px;
+  color: #666;
+}
+
+.form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #fff;
+}
+
+textarea {
+  height: 100px;
+}
+
+.submit-button {
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button.btn:hover {
+  background-color: #0b5ed7;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -10px; /* To compensate for padding */
+}
+
+.col-md-6 {
+  width: 50%;
+  padding: 0 10px;
+}
+
+.col-12 {
+  width: 100%;
+  padding: 0 10px;
+}
+
+/* Custom File Upload Styling */
+.custom-file-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+  justify-content: center; /* Center the file upload wrapper */
+}
+
+.custom-file-label {
+  background-color: whitesmoke; /* Soft green */
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.custom-file-label:hover {
+  background-color: #218838; /* Darker green on hover */
+  color: white;
+}
+
+.hidden-file-input {
+  display: none;
+}
+
+.file-name-text {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.text-danger {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 4px;
+  display: block;
+}

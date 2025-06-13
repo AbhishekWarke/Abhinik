@@ -1,0 +1,25 @@
+.card-wrapper {
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+  border: 2px solid #dee2e6;
+  border-radius: 10px;
+  padding: 15px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, box-shadow;
+}
+
+.card-wrapper.hover-left {
+  transform: translateY(-10px) rotateY(-4deg);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  border-color: #0d6efd;
+}
+
+.card-wrapper.hover-right {
+  transform: translateY(-10px) rotateY(4deg);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  border-color: #0d6efd;
+}

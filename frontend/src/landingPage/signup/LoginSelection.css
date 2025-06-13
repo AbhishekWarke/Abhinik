@@ -1,0 +1,123 @@
+/* Basic layout settings for the login selection page */
+.login-selection-container {
+    background-color: #f7f7f7; /* Light gray background */
+    height: 100vh;  /* Full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 20px;
+  }
+  
+  /* Header section for logo and subheading */
+  .login-selection-header {
+    margin-bottom: 20px;
+  }
+  
+  .logo {
+    width: 120px;  /* Adjust logo size */
+    margin-bottom: 15px;
+  }
+  
+  .subheading {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  /* Styling for login selection box */
+  .login-selection-box {
+    background-color: white;
+    width: 100%;
+    max-width: 400px;  /* Set max width */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  
+  /* Hover effect for login box */
+  .login-selection-box:hover {
+    transform: translateY(-5px);  /* Slightly lift the box */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);  /* More prominent shadow on hover */
+  }
+  
+  /* Form inputs and labels */
+  .input-group {
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  
+  .input-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s, background-color 0.3s;
+  }
+  
+  .input-group input:focus {
+    border-color: #4a90e2;
+    outline: none;
+    background-color: #fff;
+  }
+  
+  /* Button styling */
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4a90e2;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  button:hover {
+    background-color: #357ab7; /* Darker shade on hover */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+  }
+  
+  /* Signup reference section */
+  .signup-reference {
+    margin-top: 15px;
+  }
+  
+  .signup-text {
+    font-size: 0.9rem;
+    color: #333;
+  }
+  
+  .signup-link {
+    color: #4a90e2;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+  }
+  
+  .signup-link:hover {
+    color: #357ab7; /* Darker shade on hover */
+    text-decoration: underline;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+  }
+  

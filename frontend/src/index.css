@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  
+  .nav-link{
+      margin-left: 20px;
+  }
+  
+  .navbar .nav-link {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar .nav-link:hover {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  
+  footer a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+  }
+  
+  footer a:hover {
+    text-decoration: none;      /* Make sure underline is gone on hover */
+    color: #007bff;             /* Change to blue on hover */
+  }
+  
+  .paranchor a{
+    text-decoration: none;
+    transition: color 0.3s ease
+  }
+  
+  .paranchorTeam a{
+    text-decoration: none;
+    color: #387ed1;
+    transition: color 0.3s ease;
+  }
+  
+  .ticketanchor a{
+    text-decoration: none;
+    color: #387ed1;
+    transition: color 0.3s ease;
+  }
+  
+  .ticketanchor ul{
+    list-style-type: none;
+  }
+  
+  .ticketanchor a:hover{
+    color: #222;
+  }
+  
+  #supportHero{
+    background-color: #387ed1;
+    color: white;
+  }
+  
+  #supportWrapper{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 95px;
+  }
+  
+  #supportHero a{
+    color: white;
+  }
+  
+  #supportHero input{
+    padding: 0 20px;
+    width: 100%;
+    font-size: 20px;
+    border-radius: 5px;
+    border: none;
+  }
+  
+  #supportHero a{
+    text-underline-offset: 10px;
+  }
+  
+  /* #supportSecond{
+    margin-left: 10px;
+  } */
