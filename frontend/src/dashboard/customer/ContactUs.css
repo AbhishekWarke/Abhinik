@@ -23,3 +23,30 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   border-color: #0d6efd;
 }
+
+.success-overlay {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border: 2px solid #0d6efd;
+  padding: 15px 25px;
+  border-radius: 10px;
+  z-index: 1000;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeInSlideDown 0.4s ease-out;
+}
+
+@keyframes fadeInSlideDown {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+

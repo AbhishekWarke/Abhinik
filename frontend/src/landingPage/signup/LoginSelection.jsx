@@ -4,11 +4,13 @@ import './LoginSelection.css';
 import logo from '/Media/Logo.png';
 import { signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
+import { Spinner } from 'react-bootstrap';
 
 function LoginSelection() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,10 +34,13 @@ function LoginSelection() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setErrorMessage('');
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
       alert('Please enter a valid email address.');
+      setLoading(false);
       return;
     }
 
@@ -47,10 +52,10 @@ function LoginSelection() {
         await sendEmailVerification(user);
         setErrorMessage('Your email is not verified. Verification email sent. Please check your inbox.');
         await auth.signOut();
+        setLoading(false);
         return;
       }
 
-      // Store name + email in localStorage (we assume name based on known email for now)
       let name = "User";
       if (email === "abhishekwarke214@gmail.com") {
         name = "Admin Abhishek";
@@ -68,6 +73,8 @@ function LoginSelection() {
     } catch (error) {
       console.error('Error logging in:', error.message);
       setErrorMessage('Invalid email or password. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -107,7 +114,16 @@ function LoginSelection() {
             />
           </div>
 
-          <button type="submit">Login</button>
+          <button type="submit" disabled={loading}>
+            {loading ? (
+              <>
+                <Spinner animation="border" size="sm" className="me-2" />
+                Logging in...
+              </>
+            ) : (
+              'Login'
+            )}
+          </button>
         </form>
       </div>
 

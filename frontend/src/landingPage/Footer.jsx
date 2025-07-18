@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-
-
 function Footer() {
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleProtectedClick = (e) => {
+    e.preventDefault();
+    setShowPopup(true);
+  };
+
+  const closePopup = () => setShowPopup(false);
+
   return (
     <>
       <hr style={{ borderTop: "1px solid #d1d5db" }} /> {/* light gray line */}
@@ -37,9 +44,9 @@ function Footer() {
 
             <div className="col-3" style={{ lineHeight: "1.8" }}>
               <p style={{ fontSize: "1.25rem", fontWeight: "bold" }}>Account</p>
+              <a href="#" onClick={handleProtectedClick}>View Service Records</a><br />
+              <a href="#" onClick={handleProtectedClick}>Service Requests</a><br />
               <Link to="/signup">Manage Account</Link><br />
-              <Link to="/login">View Service Records</Link><br />
-              <Link to="/signup">Service Requests</Link><br />
             </div>
           </div>
 
@@ -55,6 +62,47 @@ function Footer() {
             </p>
           </div>
         </div>
+
+        {/* Popup Modal */}
+        {showPopup && (
+          <div style={{
+            position: "fixed",
+            top: 0, left: 0,
+            width: "100%", height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            zIndex: 9999
+          }}>
+            <div style={{
+              backgroundColor: "#fff",
+              padding: "2rem",
+              borderRadius: "10px",
+              width: "90%", maxWidth: "500px",
+              textAlign: "center",
+              boxShadow: "0px 0px 10px rgba(0,0,0,0.2)"
+            }}>
+              <p style={{ fontSize: "1.1rem", marginBottom: "1.5rem" }}>
+                To access AbhiNik’s services, please log in or sign up first.
+              </p>
+              <img
+                src="/Media/Logo.png"
+                alt="AbhiNik Logo"
+                style={{ width: "150px", marginTop: "10px" }}
+              />
+              <button onClick={closePopup} style={{
+                marginTop: "1.5rem",
+                backgroundColor: "#424242",
+                color: "#fff",
+                padding: "0.5rem 1rem",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer"
+              }}>
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </footer>
     </>
   );
