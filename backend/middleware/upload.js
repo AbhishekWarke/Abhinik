@@ -4,11 +4,13 @@ const path = require('path');
 // Storage configuration for contracts
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/contracts'); // make sure this folder exists
+    cb(null, path.resolve('uploads/contracts')); // safer absolute path
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
+    // Keep original name (without path) + unique suffix for better clarity
+    const originalName = path.parse(file.originalname).name.replace(/\s+/g, '_');
+    cb(null, `${originalName}-${uniqueSuffix}${path.extname(file.originalname)}`);
   }
 });
 

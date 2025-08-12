@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { uploadContract } from "../../api/contracts";
 import "./ManageContract.css";
 import AdminNavbar from "./AdminNavbar";
@@ -19,14 +19,6 @@ function ManageContract() {
 
   const [formErrors, setFormErrors] = useState({});
   const [showSuccess, setShowSuccess] = useState(false);
-
-  useEffect(() => {
-    const handleClickOutside = () => {
-      if (showSuccess) setShowSuccess(false);
-    };
-    window.addEventListener("click", handleClickOutside);
-    return () => window.removeEventListener("click", handleClickOutside);
-  }, [showSuccess]);
 
   const handleChange = (e) => {
     setContractDetails({
@@ -77,14 +69,14 @@ function ManageContract() {
     if (Object.keys(errors).length > 0) return;
 
     try {
-      const submissionData = {
+      const formData = {
         ...contractDetails,
         numberOfServices: parseInt(contractDetails.numberOfServices, 10),
         contractPrice: parseFloat(contractDetails.contractPrice),
       };
 
-      await uploadContract(submissionData);
-      setShowSuccess(true); // ✅ Show overlay instead of alert
+      await uploadContract(formData);
+      setShowSuccess(true); 
 
       setContractDetails({
         customerName: "",
@@ -342,55 +334,22 @@ function ManageContract() {
         </div>
       </section>
 
-      {/* ✅ Overlay Message */}
+      {/* ✅ Final & Corrected Pop-up Code */}
       {showSuccess && (
         <div
-          className="success-overlay"
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.4)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 9999,
-          }}
+          className="contract-popup-overlay"
           onClick={() => setShowSuccess(false)}
         >
           <div
-            style={{
-              background: "#fff",
-              padding: "2rem",
-              borderRadius: "10px",
-              boxShadow: "0 0 10px rgba(0,0,0,0.2)",
-              textAlign: "center",
-              position: "relative",
-            }}
+            className="contract-popup-content"
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              onClick={() => setShowSuccess(false)}
-              style={{
-                position: "absolute",
-                top: "10px",
-                right: "15px",
-                background: "transparent",
-                border: "none",
-                fontSize: "1.5rem",
-                cursor: "pointer",
-              }}
-            >
-              &times;
-            </button>
-            <h3 style={{ fontWeight: "600", marginBottom: "10px", fontSize: "20px" }}>
-              <span style={{ color: "red" }}>Abhi</span>
-              <span style={{ color: "blue" }}>Nik</span>
+            <h3 style={{ fontWeight: '600', marginBottom: '10px', fontSize: '20px' }}>
+              <span style={{ color: 'red' }}>Abhi</span>
+              <span style={{ color: 'blue' }}>Nik</span>
             </h3>
-            <p style={{ fontSize: "16px", margin: 0 }}>
-             ✅ Contract Added Successfully
+            <p style={{ fontSize: '16px' }}>
+              ✅ Contract Added Successfully
             </p>
           </div>
         </div>

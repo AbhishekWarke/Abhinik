@@ -38,14 +38,12 @@ function AdminFooter() {
               >
                 AbhiNik Lift Services Ltd.
                 <br />
-                2nd Floor, Omega Towers,
-                <br />
                 Sector 45, Navi Mumbai,
                 <br />
                 Maharashtra, India – 400706
               </p>
               <p className="text-muted" style={{ fontSize: "0.75rem" }}>
-                📞 +91 98765 43210
+                📞 +91 7xxxxxxxxx2
               </p>
             </div>
 

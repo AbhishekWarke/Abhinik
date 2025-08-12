@@ -96,7 +96,7 @@ button.btn:hover {
 }
 
 .custom-file-label {
-  background-color: whitesmoke; /* Soft green */
+  background-color: whitesmoke;
   color: white;
   padding: 8px 12px;
   border-radius: 6px;
@@ -107,7 +107,7 @@ button.btn:hover {
 }
 
 .custom-file-label:hover {
-  background-color: #218838; /* Darker green on hover */
+  background-color: #218838;
   color: white;
 }
 
@@ -125,4 +125,35 @@ button.btn:hover {
   font-size: 0.875rem;
   margin-top: 4px;
   display: block;
+}
+
+
+/* --- FINAL & CORRECTED STYLES FOR POP-UP --- */
+
+/* This creates the dark, full-screen background */
+.contract-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensures it's on top of ALL other content */
+}
+
+/* This is the small white box with the message */
+.contract-popup-content {
+  background: #fff;
+  padding: 1.5rem 2.5rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.contract-popup-content p {
+  margin: 0;
+  color: #333;
 }

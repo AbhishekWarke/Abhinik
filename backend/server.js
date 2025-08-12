@@ -1,13 +1,16 @@
 require("dotenv").config();
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 
+// Database connection
+const connectDB = require("./db");
+
+// Routes
 const contractRoutes = require("./routes/contractRoutes");
 const servicingRoutes = require("./routes/servicingRoutes");
 const customerRoutes = require("./routes/customerRoutes");
-const complaintRoutes = require("./routes/complaintRoutes"); // ✅ newly added
+const complaintRoutes = require("./routes/complaintRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,13 +27,10 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/contracts", contractRoutes);
 app.use("/api/servicing", servicingRoutes);
 app.use("/api/customers", customerRoutes);
-app.use("/api/complaints", complaintRoutes); // ✅ mounted complaint route
+app.use("/api/complaints", complaintRoutes);
 
-// MongoDB connection
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("MongoDB Atlas connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+// Connect to MongoDB
+connectDB();
 
 // Start server
 app.listen(PORT, () => {

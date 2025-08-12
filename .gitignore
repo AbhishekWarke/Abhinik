@@ -24,4 +24,8 @@ dist-ssr
 *.sw?
 
 # Firebase private key
-backend/serviceAccountKey.json
+BACKEND/serviceAccountKey.json
+
+# Environment variables
+.env
+BACKEND/.env
