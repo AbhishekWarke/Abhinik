@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import CustomerNavbar from "./CustomerNavbar";
 import CustomerFooter from "./CustomerFooter";
-      
+
+const API_URL = import.meta.env.VITE_API_URL;
+const FILES_URL = import.meta.env.VITE_FILES_URL;
+
 function ServicingRecord() {
   const [contract, setContract] = useState(null);
   const [servicingRecords, setServicingRecords] = useState([]);
@@ -21,9 +24,7 @@ function ServicingRecord() {
           return;
         }
 
-        const res = await fetch(
-          `http://localhost:5000/api/contracts/user?email=${userEmail}`
-        );
+        const res = await fetch(`${API_URL}/contracts/user?email=${userEmail}`);
         const data = await res.json();
 
         if (data && data.contractNumber) {
@@ -41,9 +42,7 @@ function ServicingRecord() {
 
     const fetchServicings = async (contractNumber) => {
       try {
-        const res = await fetch(
-          `http://localhost:5000/api/servicing/${contractNumber}`
-        );
+        const res = await fetch(`${API_URL}/servicing/${contractNumber}`);
         const data = await res.json();
 
         const sortedData = data.sort(
@@ -63,7 +62,7 @@ function ServicingRecord() {
   const handleViewPhotos = (photos) => {
     if (!photos || photos.length === 0) return;
     setSelectedPhotos(
-      photos.map((photo) => `http://localhost:5000/${photo.replace(/\\/g, "/")}`)
+      photos.map((photo) => `${FILES_URL}/${photo.replace(/\\/g, "/")}`)
     );
     setShowPhotosModal(true);
   };
@@ -123,7 +122,7 @@ function ServicingRecord() {
                   >
                     {record.photos && record.photos.length > 0 && (
                       <img
-                        src={`http://localhost:5000/${record.photos[0].replace(
+                        src={`${FILES_URL}/${record.photos[0].replace(
                           /\\/g,
                           "/"
                         )}`}
@@ -143,7 +142,10 @@ function ServicingRecord() {
                       <h5 className="card-title">
                         Servicing #{record.servicingNumber}
                       </h5>
-                      <p className="card-text text-muted" style={{ fontSize: "0.9rem" }}>
+                      <p
+                        className="card-text text-muted"
+                        style={{ fontSize: "0.9rem" }}
+                      >
                         {record.remark ? record.remark : "No remarks"}
                       </p>
                     </div>
@@ -160,7 +162,7 @@ function ServicingRecord() {
                       style={{ flexWrap: "wrap", rowGap: "0.5rem" }}
                     >
                       <a
-                        href={`http://localhost:5000/${record.receipt.replace(
+                        href={`${FILES_URL}/${record.receipt.replace(
                           /\\/g,
                           "/"
                         )}`}
@@ -183,7 +185,11 @@ function ServicingRecord() {
                       ) : (
                         <span
                           className="text-muted"
-                          style={{ flex: "1 1 45%", fontSize: "0.9rem", alignSelf: "center" }}
+                          style={{
+                            flex: "1 1 45%",
+                            fontSize: "0.9rem",
+                            alignSelf: "center",
+                          }}
                         >
                           No photos available
                         </span>
@@ -247,18 +253,18 @@ function ServicingRecord() {
       <style>
         {`
           .view-receipt-btn:hover {
-            background-color: #007bff !important; /* Bootstrap blue */
+            background-color: #007bff !important;
             color: white !important;
             border-color: #007bff !important;
           }
           .view-photos-btn:hover {
-            background-color: #28a745 !important; /* Bootstrap green */
+            background-color: #28a745 !important;
             color: white !important;
             border-color: #28a745 !important;
           }
         `}
       </style>
-      < CustomerFooter />
+      <CustomerFooter />
     </>
   );
 }

@@ -1,6 +1,8 @@
 // src/api/contracts.js
 import axios from 'axios';
 
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 // Upload a new contract
 export const uploadContract = async (contractDetails) => {
   try {
@@ -15,7 +17,7 @@ export const uploadContract = async (contractDetails) => {
     formData.append('contractPrice', contractDetails.contractPrice);
     formData.append('contractPDF', contractDetails.contractPDF);
 
-    const response = await axios.post('http://localhost:5000/api/contracts', formData, {
+    const response = await axios.post(`${API_BASE}/contracts`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -31,7 +33,7 @@ export const uploadContract = async (contractDetails) => {
 // Delete a contract by ID
 export const deleteContract = async (id) => {
   try {
-    const response = await axios.delete(`http://localhost:5000/api/contracts/${id}`);
+    const response = await axios.delete(`${API_BASE}/contracts/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error deleting contract:', error);
@@ -39,13 +41,13 @@ export const deleteContract = async (id) => {
   }
 };
 
-// New: Fetch contract by user email
+// Fetch contract by user email
 export const getContractByEmail = async (email) => {
   try {
-    const response = await axios.get('http://localhost:5000/api/contracts/user', {
+    const response = await axios.get(`${API_BASE}/contracts/user`, {
       params: { email },
     });
-    return response.data; // Returns the contract object
+    return response.data;
   } catch (error) {
     console.error('Error fetching contract by email:', error);
     throw error;

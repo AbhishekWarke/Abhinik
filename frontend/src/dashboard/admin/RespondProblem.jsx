@@ -3,6 +3,10 @@ import AdminNavbar from "./AdminNavbar";
 import AdminFooter from "./AdminFooter";
 import "./OverlayMessage.css"; // Make sure this file exists and is styled
 
+// ✅ Use env vars (fallback to localhost for local dev)
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const FILES_BASE = import.meta.env.VITE_FILES_URL || "http://localhost:5000";
+
 function RespondProblem() {
   const [complaints, setComplaints] = useState([]);
   const [responseStatus, setResponseStatus] = useState({});
@@ -11,7 +15,7 @@ function RespondProblem() {
   useEffect(() => {
     const fetchComplaints = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/complaints");
+        const res = await fetch(`${API_BASE}/complaints`);
         const data = await res.json();
         if (res.ok) {
           setComplaints(data);
@@ -35,7 +39,7 @@ function RespondProblem() {
     if (!value) return alert("Please select Yes/No before submitting.");
 
     try {
-      const res = await fetch(`http://localhost:5000/api/complaints/${id}`, {
+      const res = await fetch(`${API_BASE}/complaints/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ seenByAdmin: value === "yes" }),
@@ -49,7 +53,6 @@ function RespondProblem() {
 
       const data = await res.json();
 
-      // Update complaint state with timestamp
       setComplaints((prev) =>
         prev.map((c) =>
           c._id === id
@@ -121,7 +124,7 @@ function RespondProblem() {
                       }}
                     >
                       <img
-                        src={`http://localhost:5000/${file}`}
+                        src={`${FILES_BASE}/${file}`}
                         alt="complaint"
                         style={{
                           width: "300px",

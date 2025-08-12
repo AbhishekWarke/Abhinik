@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import CustomerNavbar from "./CustomerNavbar";
 import CustomerFooter from "./CustomerFooter";
 
+const API_BASE = import.meta.env.VITE_API_URL;
+
 function ReportProblem() {
   const [problemText, setProblemText] = useState("");
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -26,7 +28,7 @@ function ReportProblem() {
 
     const fetchComplaints = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/complaints?email=${user.email}`);
+        const res = await fetch(`${API_BASE}/complaints?email=${user.email}`);
         const data = await res.json();
 
         if (res.ok) setAllComplaints(data.reverse());
@@ -63,7 +65,7 @@ function ReportProblem() {
     selectedFiles.forEach((file) => formData.append("files", file));
 
     try {
-      const res = await fetch("http://localhost:5000/api/complaints", {
+      const res = await fetch(`${API_BASE}/complaints`, {
         method: "POST",
         body: formData,
       });

@@ -13,6 +13,8 @@ function UserDashboard() {
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState(null); // For showing fetch errors
 
+  const API_URL = import.meta.env.VITE_API_URL; // ✅ Use env variable
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (!user) {
@@ -36,7 +38,7 @@ function UserDashboard() {
 
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/contracts/user?email=${encodeURIComponent(userEmail)}`
+          `${API_URL}/contracts/user?email=${encodeURIComponent(userEmail)}`
         );
 
         if (res.data && Object.keys(res.data).length > 0) {
@@ -54,14 +56,13 @@ function UserDashboard() {
     };
 
     fetchContract();
-  }, [userEmail]);
+  }, [userEmail, API_URL]);
 
   return (
     <div>
       <CustomerNavbar />
 
       <div className="container mt-4">
-
         {loading && <p>Loading your contract details...</p>}
 
         {!loading && errorMsg && <p className="text-danger">{errorMsg}</p>}
@@ -74,7 +75,7 @@ function UserDashboard() {
           <CustomerContract contract={contract} />
         )}
       </div>
-      < CustomerFooter />
+      <CustomerFooter />
     </div>
   );
 }

@@ -1,8 +1,8 @@
 // src/api/servicing.js
-
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/api/servicing";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const BASE_URL = `${API_BASE}/servicing`;
 
 export const uploadServicingRecord = async (formData) => {
   try {

@@ -31,3 +31,6 @@ BACKEND/serviceAccountKey.json
 # Environment variables (any location)
 .env
 BACKEND/.env
+
+.env
+FRONTEND/.env

@@ -44,6 +44,9 @@ function CustomerContract({ contract }) {
     setShowRenewMessage(true);
   };
 
+  // ✅ Use environment variable instead of hardcoded localhost
+  const filesBaseUrl = import.meta.env.VITE_FILES_URL;
+
   return (
     <>
       <div
@@ -130,7 +133,7 @@ function CustomerContract({ contract }) {
 
           <div style={{ padding: "12px 16px" }}>
             <a
-              href={`http://localhost:5000/uploads/contracts/${contractPDF}`}
+              href={`${filesBaseUrl}/uploads/contracts/${contractPDF}`}
               target="_blank"
               rel="noopener noreferrer"
               className="hover-link"

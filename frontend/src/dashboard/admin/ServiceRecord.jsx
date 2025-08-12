@@ -4,6 +4,10 @@ import axios from "axios";
 import { uploadServicingRecord } from "../../api/servicing";
 import AdminFooter from "./AdminFooter";
 
+// Use environment variables for API and file URLs
+const API_URL = import.meta.env.VITE_API_URL;
+const FILES_URL = import.meta.env.VITE_FILES_URL;
+
 const ServiceRecord = () => {
   const [searchInput, setSearchInput] = useState("");
   const [contract, setContract] = useState(null);
@@ -38,7 +42,7 @@ const ServiceRecord = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/contracts");
+      const response = await axios.get(`${API_URL}/contracts`);
       const allContracts = response.data;
 
       const foundContract = allContracts.find(
@@ -52,7 +56,7 @@ const ServiceRecord = () => {
         setError("");
 
         const recordResponse = await axios.get(
-          `http://localhost:5000/api/servicing/${foundContract.contractNumber}`
+          `${API_URL}/servicing/${foundContract.contractNumber}`
         );
         setServicingRecords(recordResponse.data);
       } else {
@@ -189,7 +193,7 @@ const ServiceRecord = () => {
                       Remark: {record.remark}
                       <br />
                       <a
-                        href={`http://localhost:5000/${record.receipt}`}
+                        href={`${FILES_URL}/${record.receipt}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >

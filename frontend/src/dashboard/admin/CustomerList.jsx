@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { deleteContract } from "../../api/contracts";
 
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const FILES_BASE = import.meta.env.VITE_FILES_URL || "http://localhost:5000/uploads";
+
 function CustomerList() {
   const [contracts, setContracts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // State for the two pop-ups: confirmation and success
   const [showDeleteSuccess, setShowDeleteSuccess] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [contractToDelete, setContractToDelete] = useState(null);
@@ -16,7 +18,7 @@ function CustomerList() {
     const fetchContracts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("http://localhost:5000/api/contracts");
+        const response = await axios.get(`${API_BASE}/contracts`);
         setContracts(response.data);
         setError(null);
       } catch (error) {
@@ -30,13 +32,11 @@ function CustomerList() {
     fetchContracts();
   }, []);
 
-  // Step 1: When delete is clicked, show the custom confirmation dialog
   const handleDeleteRequest = (id) => {
     setContractToDelete(id);
     setShowConfirmDialog(true);
   };
 
-  // Step 2: If user confirms, proceed with deletion
   const handleConfirmDelete = async () => {
     if (!contractToDelete) return;
 
@@ -45,33 +45,22 @@ function CustomerList() {
       setContracts((prevContracts) =>
         prevContracts.filter((contract) => contract._id !== contractToDelete)
       );
-      
-      // Hide confirmation and show success message
       setShowConfirmDialog(false);
       setShowDeleteSuccess(true);
-      
-      // Reset the contract to delete
       setContractToDelete(null);
-
-      // Hide the success message after 3 seconds
-      setTimeout(() => {
-        setShowDeleteSuccess(false);
-      }, 3000);
-
+      setTimeout(() => setShowDeleteSuccess(false), 3000);
     } catch (error) {
       console.error("Failed to delete contract:", error);
       alert("Failed to delete contract. Please try again.");
-      setShowConfirmDialog(false); // Hide dialog on error
+      setShowConfirmDialog(false);
       setContractToDelete(null);
     }
   };
-  
-  // Step 3: If user cancels, just close the dialog
-  const handleCancelDelete = () => {
-      setShowConfirmDialog(false);
-      setContractToDelete(null);
-  };
 
+  const handleCancelDelete = () => {
+    setShowConfirmDialog(false);
+    setContractToDelete(null);
+  };
 
   // --- Inline styles for all pop-ups ---
   const styles = {
@@ -96,41 +85,41 @@ function CustomerList() {
       width: '350px',
     },
     confirmText: {
-        fontSize: '18px',
-        marginBottom: '1.5rem',
-        color: '#333'
+      fontSize: '18px',
+      marginBottom: '1.5rem',
+      color: '#333'
     },
     buttonContainer: {
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '1rem'
+      display: 'flex',
+      justifyContent: 'center',
+      gap: '1rem'
     },
     confirmButton: {
-        padding: '10px 20px',
-        border: 'none',
-        borderRadius: '5px',
-        backgroundColor: '#dc3545',
-        color: 'white',
-        fontSize: '16px',
-        cursor: 'pointer'
+      padding: '10px 20px',
+      border: 'none',
+      borderRadius: '5px',
+      backgroundColor: '#dc3545',
+      color: 'white',
+      fontSize: '16px',
+      cursor: 'pointer'
     },
     cancelButton: {
-        padding: '10px 20px',
-        border: 'none',
-        borderRadius: '5px',
-        backgroundColor: '#6c757d',
-        color: 'white',
-        fontSize: '16px',
-        cursor: 'pointer'
+      padding: '10px 20px',
+      border: 'none',
+      borderRadius: '5px',
+      backgroundColor: '#6c757d',
+      color: 'white',
+      fontSize: '16px',
+      cursor: 'pointer'
     },
     successText: { 
-        fontSize: '18px', 
-        margin: '0 0 1rem 0', 
-        color: '#333' 
+      fontSize: '18px', 
+      margin: '0 0 1rem 0', 
+      color: '#333' 
     },
     brandHeader: {
-        fontWeight: '600',
-        fontSize: '22px'
+      fontWeight: '600',
+      fontSize: '22px'
     }
   };
   // ------------------------------------
@@ -196,7 +185,7 @@ function CustomerList() {
                   <td>{new Date(contract.endDate).toLocaleDateString()}</td>
                   <td>
                     <a
-                      href={`http://localhost:5000/uploads/contracts/${contract.contractPDF}`}
+                      href={`${FILES_BASE}/contracts/${contract.contractPDF}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn btn-sm btn-outline-primary"
@@ -225,8 +214,8 @@ function CustomerList() {
           <div style={styles.popupContent}>
             <p style={styles.confirmText}>Are you sure you want to delete this contract?</p>
             <div style={styles.buttonContainer}>
-                <button onClick={handleConfirmDelete} style={styles.confirmButton}>Yes, Delete</button>
-                <button onClick={handleCancelDelete} style={styles.cancelButton}>Cancel</button>
+              <button onClick={handleConfirmDelete} style={styles.confirmButton}>Yes, Delete</button>
+              <button onClick={handleCancelDelete} style={styles.cancelButton}>Cancel</button>
             </div>
           </div>
         </div>
@@ -237,11 +226,11 @@ function CustomerList() {
         <div style={styles.popupOverlay}>
           <div style={styles.popupContent}>
             <p style={styles.successText}>
-                ✅ Contract Deleted Successfully
+              ✅ Contract Deleted Successfully
             </p>
             <h3 style={styles.brandHeader}>
-                <span style={{ color: 'red' }}>Abhi</span>
-                <span style={{ color: 'blue' }}>Nik</span>
+              <span style={{ color: 'red' }}>Abhi</span>
+              <span style={{ color: 'blue' }}>Nik</span>
             </h3>
           </div>
         </div>
