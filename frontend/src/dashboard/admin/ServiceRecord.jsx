@@ -4,7 +4,6 @@ import axios from "axios";
 import { uploadServicingRecord } from "../../api/servicing";
 import AdminFooter from "./AdminFooter";
 
-// Use environment variables for API and file URLs
 const API_URL = import.meta.env.VITE_API_URL;
 const FILES_URL = import.meta.env.VITE_FILES_URL;
 
@@ -21,8 +20,6 @@ const ServiceRecord = () => {
   });
 
   const [servicingRecords, setServicingRecords] = useState([]);
-
-  // Overlay State
   const [showSuccessOverlay, setShowSuccessOverlay] = useState(false);
   const overlayRef = useRef();
 
@@ -115,7 +112,7 @@ const ServiceRecord = () => {
         receipt: null,
         photos: [],
       });
-      setShowSuccessOverlay(true); // Show overlay
+      setShowSuccessOverlay(true);
     } catch (error) {
       console.error(error);
       alert("Failed to save servicing record. Check console for details.");
@@ -123,20 +120,37 @@ const ServiceRecord = () => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+    <div className="d-flex flex-column min-vh-100">
       <AdminNavbar />
-      <div style={{ flex: 1 }}>
-        <h2 style={{ textAlign: "center", fontWeight: "300", marginTop: "20px" }}>
+
+      <main style={{ flex: 1 }}>
+        <h2
+          style={{
+            textAlign: "center",
+            fontWeight: "300",
+            marginTop: "20px",
+          }}
+        >
           Service Record Management
         </h2>
 
-        <div style={{ display: "flex", justifyContent: "center", marginTop: "30px" }}>
+        {/* Search */}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: "10px",
+            marginTop: "30px",
+            padding: "0 15px",
+          }}
+        >
           <input
             type="text"
             placeholder="Enter Contract Number or Customer Name"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            style={{ padding: "10px", width: "400px", marginRight: "10px" }}
+            style={{ padding: "10px", flex: "1 1 280px", maxWidth: "400px" }}
           />
           <button
             onClick={handleSearch}
@@ -147,7 +161,8 @@ const ServiceRecord = () => {
               border: "none",
               borderRadius: "5px",
               cursor: "pointer",
-              width: "200px",
+              flex: "1 1 180px",
+              maxWidth: "200px",
             }}
           >
             Search
@@ -155,20 +170,25 @@ const ServiceRecord = () => {
         </div>
 
         {error && (
-          <p style={{ color: "red", textAlign: "center", marginTop: "20px" }}>{error}</p>
+          <p style={{ color: "red", textAlign: "center", marginTop: "20px" }}>
+            {error}
+          </p>
         )}
 
         {contract && (
           <div
             style={{
-              maxWidth: "800px",
+              maxWidth: "900px",
               margin: "40px auto",
               border: "1px solid #ccc",
               padding: "20px",
               borderRadius: "8px",
             }}
           >
-            <h3 style={{ textAlign: "center", fontWeight: "400" }}>Contract Summary</h3>
+            <h3 style={{ textAlign: "center", fontWeight: "400" }}>
+              Contract Summary
+            </h3>
+
             <p><strong>Customer:</strong> {contract.customerName}</p>
             <p><strong>Contract Number:</strong> {contract.contractNumber}</p>
             <p><strong>Type:</strong> {contract.contractType}</p>
@@ -178,17 +198,20 @@ const ServiceRecord = () => {
             <p><strong>Contract Price:</strong> ₹{contract.contractPrice || "N/A"}</p>
 
             <hr style={{ margin: "20px 0" }} />
-            <h4 style={{ marginBottom: "10px" }}>Servicing Records:</h4>
+
+            <h4>Servicing Records:</h4>
             {servicingRecords.length === 0 ? (
-              <p style={{ fontStyle: "italic" }}>No record / No servicing done yet</p>
+              <p style={{ fontStyle: "italic" }}>
+                No record / No servicing done yet
+              </p>
             ) : (
               <ul>
                 {[...servicingRecords]
                   .sort((a, b) => a.servicingNumber - b.servicingNumber)
                   .map((record) => (
                     <li key={record._id} style={{ marginBottom: "15px" }}>
-                      <strong>Servicing Number: {record.servicingNumber}</strong> -{" "}
-                      {new Date(record.servicingDate).toLocaleDateString()}
+                      <strong>Servicing Number: {record.servicingNumber}</strong>{" "}
+                      - {new Date(record.servicingDate).toLocaleDateString()}
                       <br />
                       Remark: {record.remark}
                       <br />
@@ -205,58 +228,54 @@ const ServiceRecord = () => {
             )}
 
             <hr style={{ margin: "20px 0" }} />
+
             <h4>Add New Servicing Record</h4>
             <form onSubmit={handleSubmit}>
-              <div style={{ marginBottom: "10px" }}>
-                <label>Servicing Number:</label><br />
-                <input
-                  type="text"
-                  name="servicingNumber"
-                  value={servicingData.servicingNumber}
-                  onChange={handleInputChange}
-                  style={{ width: "100%", padding: "8px" }}
-                  required
-                />
-              </div>
-              <div style={{ marginBottom: "10px" }}>
-                <label>Servicing Date:</label><br />
-                <input
-                  type="date"
-                  name="servicingDate"
-                  value={servicingData.servicingDate}
-                  onChange={handleInputChange}
-                  style={{ width: "100%", padding: "8px" }}
-                  required
-                />
-              </div>
-              <div style={{ marginBottom: "10px" }}>
-                <label>Remark:</label><br />
-                <textarea
-                  name="remark"
-                  value={servicingData.remark}
-                  onChange={handleInputChange}
-                  style={{ width: "100%", padding: "8px" }}
-                  rows={3}
-                />
-              </div>
-              <div style={{ marginBottom: "10px" }}>
-                <label>Upload Service Receipt (PDF):</label><br />
-                <input
-                  type="file"
-                  accept="application/pdf"
-                  onChange={handleReceiptChange}
-                  required
-                />
-              </div>
-              <div style={{ marginBottom: "20px" }}>
-                <label>Upload Additional Photos (optional):</label><br />
-                <input
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  onChange={handlePhotosChange}
-                />
-              </div>
+              <input
+                type="text"
+                name="servicingNumber"
+                placeholder="Servicing Number"
+                value={servicingData.servicingNumber}
+                onChange={handleInputChange}
+                style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+                required
+              />
+
+              <input
+                type="date"
+                name="servicingDate"
+                value={servicingData.servicingDate}
+                onChange={handleInputChange}
+                style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+                required
+              />
+
+              <textarea
+                name="remark"
+                value={servicingData.remark}
+                onChange={handleInputChange}
+                rows={3}
+                style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+              />
+
+              <input
+                type="file"
+                accept="application/pdf"
+                onChange={handleReceiptChange}
+                required
+              />
+
+              <br /><br />
+
+              <input
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={handlePhotosChange}
+              />
+
+              <br /><br />
+
               <button
                 type="submit"
                 style={{
@@ -273,14 +292,14 @@ const ServiceRecord = () => {
             </form>
           </div>
         )}
-      </div>
+      </main>
 
       {/* Success Overlay */}
       {showSuccessOverlay && (
         <div
           style={{
             position: "fixed",
-            top: 0, left: 0, right: 0, bottom: 0,
+            inset: 0,
             backgroundColor: "rgba(0, 0, 0, 0.4)",
             display: "flex",
             alignItems: "center",
@@ -296,7 +315,8 @@ const ServiceRecord = () => {
               borderRadius: "15px",
               boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
               textAlign: "center",
-              minWidth: "300px",
+              minWidth: "280px",
+              maxWidth: "90vw",
               position: "relative",
             }}
           >
@@ -324,6 +344,7 @@ const ServiceRecord = () => {
           </div>
         </div>
       )}
+
       <AdminFooter />
     </div>
   );

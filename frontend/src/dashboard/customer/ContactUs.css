@@ -1,3 +1,7 @@
+/* =========================
+   CARD WRAPPER
+========================= */
+
 .card-wrapper {
   transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
   border: 2px solid #dee2e6;
@@ -12,17 +16,24 @@
   will-change: transform, box-shadow;
 }
 
-.card-wrapper.hover-left {
-  transform: translateY(-10px) rotateY(-4deg);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  border-color: #0d6efd;
+/* Desktop hover effects */
+@media (hover: hover) and (pointer: fine) {
+  .card-wrapper.hover-left {
+    transform: translateY(-10px) rotateY(-4deg);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border-color: #0d6efd;
+  }
+
+  .card-wrapper.hover-right {
+    transform: translateY(-10px) rotateY(4deg);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border-color: #0d6efd;
+  }
 }
 
-.card-wrapper.hover-right {
-  transform: translateY(-10px) rotateY(4deg);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  border-color: #0d6efd;
-}
+/* =========================
+   SUCCESS OVERLAY
+========================= */
 
 .success-overlay {
   position: absolute;
@@ -37,7 +48,15 @@
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   text-align: center;
   animation: fadeInSlideDown 0.4s ease-out;
+
+  /* Responsive safety */
+  max-width: 90vw;
+  box-sizing: border-box;
 }
+
+/* =========================
+   ANIMATION (UNCHANGED)
+========================= */
 
 @keyframes fadeInSlideDown {
   0% {
@@ -50,3 +69,29 @@
   }
 }
 
+/* =========================
+   MOBILE ADJUSTMENTS
+========================= */
+
+@media (max-width: 768px) {
+  .card-wrapper {
+    padding: 12px;
+  }
+
+  .success-overlay {
+    top: 8px;
+    padding: 12px 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-wrapper {
+    padding: 10px;
+  }
+
+  .success-overlay {
+    top: 6px;
+    padding: 10px 14px;
+    border-radius: 8px;
+  }
+}

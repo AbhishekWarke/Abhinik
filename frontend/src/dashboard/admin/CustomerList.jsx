@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { deleteContract } from "../../api/contracts";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-const FILES_BASE = import.meta.env.VITE_FILES_URL || "http://localhost:5000/uploads";
+const API_BASE =
+  import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const FILES_BASE =
+  import.meta.env.VITE_FILES_URL || "http://localhost:5000/uploads";
 
 function CustomerList() {
   const [contracts, setContracts] = useState([]);
@@ -43,7 +45,9 @@ function CustomerList() {
     try {
       await deleteContract(contractToDelete);
       setContracts((prevContracts) =>
-        prevContracts.filter((contract) => contract._id !== contractToDelete)
+        prevContracts.filter(
+          (contract) => contract._id !== contractToDelete
+        )
       );
       setShowConfirmDialog(false);
       setShowDeleteSuccess(true);
@@ -62,95 +66,95 @@ function CustomerList() {
     setContractToDelete(null);
   };
 
-  // --- Inline styles for all pop-ups ---
+  // Inline popup styles (made responsive)
   const styles = {
     popupOverlay: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.6)',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
+      position: "fixed",
+      inset: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.6)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
       zIndex: 9999,
+      padding: "1rem",
     },
     popupContent: {
-      background: '#fff',
-      padding: '2rem',
-      borderRadius: '10px',
-      boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
-      textAlign: 'center',
-      width: '350px',
+      background: "#fff",
+      padding: "1.5rem",
+      borderRadius: "10px",
+      boxShadow: "0 5px 15px rgba(0, 0, 0, 0.3)",
+      textAlign: "center",
+      width: "100%",
+      maxWidth: "360px",
     },
     confirmText: {
-      fontSize: '18px',
-      marginBottom: '1.5rem',
-      color: '#333'
+      fontSize: "1rem",
+      marginBottom: "1.5rem",
+      color: "#333",
     },
     buttonContainer: {
-      display: 'flex',
-      justifyContent: 'center',
-      gap: '1rem'
+      display: "flex",
+      justifyContent: "center",
+      gap: "1rem",
+      flexWrap: "wrap",
     },
     confirmButton: {
-      padding: '10px 20px',
-      border: 'none',
-      borderRadius: '5px',
-      backgroundColor: '#dc3545',
-      color: 'white',
-      fontSize: '16px',
-      cursor: 'pointer'
+      padding: "10px 20px",
+      border: "none",
+      borderRadius: "5px",
+      backgroundColor: "#dc3545",
+      color: "white",
+      fontSize: "16px",
+      cursor: "pointer",
     },
     cancelButton: {
-      padding: '10px 20px',
-      border: 'none',
-      borderRadius: '5px',
-      backgroundColor: '#6c757d',
-      color: 'white',
-      fontSize: '16px',
-      cursor: 'pointer'
+      padding: "10px 20px",
+      border: "none",
+      borderRadius: "5px",
+      backgroundColor: "#6c757d",
+      color: "white",
+      fontSize: "16px",
+      cursor: "pointer",
     },
-    successText: { 
-      fontSize: '18px', 
-      margin: '0 0 1rem 0', 
-      color: '#333' 
+    successText: {
+      fontSize: "1.1rem",
+      marginBottom: "1rem",
+      color: "#333",
     },
     brandHeader: {
-      fontWeight: '600',
-      fontSize: '22px'
-    }
+      fontWeight: "600",
+      fontSize: "22px",
+    },
   };
-  // ------------------------------------
 
   return (
-    <div className="container mt-4 mb-4">
-      <h1 className="fs-2 text-center mb-4">Keep a track of your customers.</h1>
+    <div className="container my-4">
+      <h1 className="fs-3 text-center mb-4">
+        Keep a track of your customers
+      </h1>
 
-      <div
-        className="row border-top p-3 text-muted"
-        style={{ lineHeight: "1.65", fontSize: "1.05rem" }}
-      >
-        <div className="col-md-6 p-2">
+      {/* Intro Section */}
+      <div className="row border-top pt-3 text-muted small">
+        <div className="col-12 col-md-6 mb-3">
           <p>
             Abhinik’s contract system offers two types of service agreements:
-            Annual Maintenance Contracts (AMC) and Half Yearly Contracts. The
-            AMC provides a full year of comprehensive maintenance...
+            Annual Maintenance Contracts (AMC) and Half Yearly Contracts.
           </p>
         </div>
-        <div className="col-md-6 p-2">
+        <div className="col-12 col-md-6 mb-3">
           <p>
-            Half Yearly Contracts are for shorter terms, typically six months.
             Both contract types include start/end dates and a PDF copy of the
             terms for reference.
           </p>
         </div>
       </div>
 
+      {/* Table */}
       <div className="table-responsive mt-4">
         {loading ? (
-          <p className="text-center text-muted">Loading contracts...</p>
+          <p className="text-center text-muted">
+            Loading contracts...
+          </p>
         ) : error ? (
           <p className="text-center text-danger">{error}</p>
         ) : contracts.length === 0 ? (
@@ -159,21 +163,21 @@ function CustomerList() {
             page.
           </p>
         ) : (
-          <table className="table table-bordered table-hover">
+          <table className="table table-bordered table-hover align-middle">
             <thead className="table-light">
-              <tr>
-                <th>Serial No.</th>
-                <th>Customer Name</th>
+              <tr className="small">
+                <th>#</th>
+                <th>Customer</th>
                 <th>Email</th>
-                <th>Contract Number</th>
-                <th>Contract Price</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Contract PDF</th>
+                <th>Contract No</th>
+                <th>Price</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>PDF</th>
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="small">
               {contracts.map((contract, index) => (
                 <tr key={contract._id}>
                   <td>{index + 1}</td>
@@ -181,22 +185,28 @@ function CustomerList() {
                   <td>{contract.customerEmail}</td>
                   <td>{contract.contractNumber}</td>
                   <td>₹{contract.contractPrice}</td>
-                  <td>{new Date(contract.startDate).toLocaleDateString()}</td>
-                  <td>{new Date(contract.endDate).toLocaleDateString()}</td>
+                  <td>
+                    {new Date(contract.startDate).toLocaleDateString()}
+                  </td>
+                  <td>
+                    {new Date(contract.endDate).toLocaleDateString()}
+                  </td>
                   <td>
                     <a
                       href={`${FILES_BASE}/contracts/${contract.contractPDF}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="btn btn-sm btn-outline-primary"
+                      className="btn btn-sm btn-outline-primary w-100"
                     >
-                      View/Download
+                      View
                     </a>
                   </td>
                   <td>
                     <button
-                      onClick={() => handleDeleteRequest(contract._id)}
-                      className="btn btn-sm btn-danger"
+                      onClick={() =>
+                        handleDeleteRequest(contract._id)
+                      }
+                      className="btn btn-sm btn-danger w-100"
                     >
                       Delete
                     </button>
@@ -208,20 +218,32 @@ function CustomerList() {
         )}
       </div>
 
-      {/* Custom Confirmation Dialog */}
+      {/* Confirmation Dialog */}
       {showConfirmDialog && (
         <div style={styles.popupOverlay}>
           <div style={styles.popupContent}>
-            <p style={styles.confirmText}>Are you sure you want to delete this contract?</p>
+            <p style={styles.confirmText}>
+              Are you sure you want to delete this contract?
+            </p>
             <div style={styles.buttonContainer}>
-              <button onClick={handleConfirmDelete} style={styles.confirmButton}>Yes, Delete</button>
-              <button onClick={handleCancelDelete} style={styles.cancelButton}>Cancel</button>
+              <button
+                onClick={handleConfirmDelete}
+                style={styles.confirmButton}
+              >
+                Yes, Delete
+              </button>
+              <button
+                onClick={handleCancelDelete}
+                style={styles.cancelButton}
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Success Pop-up */}
+      {/* Success Popup */}
       {showDeleteSuccess && (
         <div style={styles.popupOverlay}>
           <div style={styles.popupContent}>
@@ -229,8 +251,8 @@ function CustomerList() {
               ✅ Contract Deleted Successfully
             </p>
             <h3 style={styles.brandHeader}>
-              <span style={{ color: 'red' }}>Abhi</span>
-              <span style={{ color: 'blue' }}>Nik</span>
+              <span style={{ color: "red" }}>Abhi</span>
+              <span style={{ color: "blue" }}>Nik</span>
             </h3>
           </div>
         </div>

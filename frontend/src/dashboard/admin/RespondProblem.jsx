@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import AdminNavbar from "./AdminNavbar";
 import AdminFooter from "./AdminFooter";
-import "./OverlayMessage.css"; // Make sure this file exists and is styled
+import "./OverlayMessage.css";
 
-// ✅ Use env vars (fallback to localhost for local dev)
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 const FILES_BASE = import.meta.env.VITE_FILES_URL || "http://localhost:5000";
 
@@ -17,16 +16,11 @@ function RespondProblem() {
       try {
         const res = await fetch(`${API_BASE}/complaints`);
         const data = await res.json();
-        if (res.ok) {
-          setComplaints(data);
-        } else {
-          console.error("Error fetching complaints:", data);
-        }
+        if (res.ok) setComplaints(data);
       } catch (error) {
         console.error("Error:", error);
       }
     };
-
     fetchComplaints();
   }, []);
 
@@ -45,13 +39,7 @@ function RespondProblem() {
         body: JSON.stringify({ seenByAdmin: value === "yes" }),
       });
 
-      if (!res.ok) {
-        const errorText = await res.text();
-        alert("Error updating complaint: " + errorText);
-        return;
-      }
-
-      const data = await res.json();
+      if (!res.ok) return;
 
       setComplaints((prev) =>
         prev.map((c) =>
@@ -69,7 +57,6 @@ function RespondProblem() {
       setTimeout(() => setShowOverlay(false), 3000);
     } catch (error) {
       console.error("Error updating complaint:", error);
-      alert("An unexpected error occurred.");
     }
   };
 
@@ -83,7 +70,7 @@ function RespondProblem() {
   };
 
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
       <AdminNavbar />
 
       {showOverlay && (
@@ -96,172 +83,137 @@ function RespondProblem() {
         </div>
       )}
 
-      <div
-        className="container mt-5"
-        style={{ fontFamily: "Segoe UI, sans-serif" }}
-      >
-        <h2 className="fw-bold text-center mb-4 text-primary">
-          Complaints Received from Customers
-        </h2>
+      <main className="flex-grow-1">
+        <div className="container mt-4">
+          <h2 className="fw-bold text-center mb-4 text-primary">
+            Complaints Received from Customers
+          </h2>
 
-        {complaints.map((complaint, index) => {
-          const isEven = index % 2 === 0;
-          const files = complaint.files || [];
+          {complaints.map((complaint, index) => {
+            const isEven = index % 2 === 0;
+            const files = complaint.files || [];
 
-          const mediaSection = (
-            <div
-              className="col-md-6 d-flex justify-content-center align-items-center"
-              style={{ minHeight: "250px", position: "relative" }}
-            >
-              {files.length > 0 ? (
-                <div className="d-flex flex-wrap gap-3">
-                  {files.map((file, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        position: "relative",
-                        display: "inline-block",
-                      }}
-                    >
+            const mediaSection = (
+              <div className="col-12 col-md-6 d-flex justify-content-center mb-3 mb-md-0">
+                {files.length > 0 ? (
+                  <div className="d-flex flex-wrap gap-3 justify-content-center">
+                    {files.map((file, i) => (
                       <img
+                        key={i}
                         src={`${FILES_BASE}/${file}`}
                         alt="complaint"
+                        className="img-fluid"
                         style={{
-                          width: "300px",
+                          maxWidth: "100%",
                           height: "200px",
                           objectFit: "cover",
                           borderRadius: "8px",
                           cursor: "pointer",
                         }}
-                        onMouseEnter={(e) => {
-                          const preview = document.createElement("img");
-                          preview.src = e.currentTarget.src;
-                          preview.style.position = "absolute";
-                          preview.style.top = "-10px";
-                          preview.style.left = "310px";
-                          preview.style.maxWidth = "400px";
-                          preview.style.maxHeight = "300px";
-                          preview.style.objectFit = "contain";
-                          preview.style.border = "1px solid #ccc";
-                          preview.style.borderRadius = "8px";
-                          preview.style.background = "#fff";
-                          preview.style.zIndex = 999;
-                          preview.className = "image-preview-hover";
-
-                          e.currentTarget.parentNode.appendChild(preview);
-                        }}
-                        onMouseLeave={(e) => {
-                          const existingPreview =
-                            e.currentTarget.parentNode.querySelector(
-                              ".image-preview-hover"
-                            );
-                          if (existingPreview) {
-                            existingPreview.remove();
-                          }
-                        }}
                       />
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-muted fst-italic">
-                  No images uploaded by customer.
-                </p>
-              )}
-            </div>
-          );
-
-          const descSection = (
-            <div
-              className="col-md-6 d-flex flex-column justify-content-center"
-              style={{ minHeight: "250px" }}
-            >
-              <h5>
-                Customer:{" "}
-                <span className="text-primary">{complaint.customerName}</span>
-              </h5>
-              <p>
-                <strong>Date:</strong>{" "}
-                {new Date(complaint.createdAt).toLocaleDateString()}
-              </p>
-              <p>
-                <strong>Description:</strong> {complaint.problemDescription}
-              </p>
-
-              <div className="mt-3">
-                <label className="form-label">Respond to Complaint:</label>
-                <select
-                  className="form-select w-50"
-                  value={responseStatus[complaint._id] || ""}
-                  onChange={(e) =>
-                    handleResponseChange(complaint._id, e.target.value)
-                  }
-                >
-                  <option value="">Select...</option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
-                </select>
-                <button
-                  onClick={() => handleSubmitResponse(complaint._id)}
-                  style={{
-                    marginTop: "10px",
-                    marginLeft: "10px",
-                    padding: "6px 12px",
-                    backgroundColor: "#0d6efd",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "4px",
-                    cursor: "pointer",
-                    width: "150px",
-                    fontSize: "14px",
-                    transition: "background-color 0.3s",
-                  }}
-                  onMouseOver={(e) =>
-                    (e.currentTarget.style.backgroundColor = "#198754")
-                  }
-                  onMouseOut={(e) =>
-                    (e.currentTarget.style.backgroundColor = "#0d6efd")
-                  }
-                >
-                  Submit
-                </button>
-
-                {complaint.respondedAt && (
-                  <p
-                    style={{
-                      marginTop: "12px",
-                      color: "gray",
-                      fontStyle: "italic",
-                    }}
-                  >
-                    You once responded to this complaint on{" "}
-                    {formatDate(complaint.respondedAt)}
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-muted fst-italic">
+                    No images uploaded by customer.
                   </p>
                 )}
               </div>
-            </div>
-          );
+            );
 
-          return (
-            <div className="row align-items-center mb-5" key={complaint._id}>
-              {isEven ? (
-                <>
-                  {descSection}
-                  {mediaSection}
-                </>
-              ) : (
-                <>
-                  {mediaSection}
-                  {descSection}
-                </>
-              )}
-              <hr className="my-4" />
-            </div>
-          );
-        })}
-      </div>
+            const descSection = (
+              <div className="col-12 col-md-6">
+                <h5>
+                  Customer:{" "}
+                  <span className="text-primary">
+                    {complaint.customerName}
+                  </span>
+                </h5>
+                <p>
+                  <strong>Date:</strong>{" "}
+                  {new Date(complaint.createdAt).toLocaleDateString()}
+                </p>
+                <p>
+                  <strong>Description:</strong>{" "}
+                  {complaint.problemDescription}
+                </p>
+
+                <div className="mt-3">
+                  <label className="form-label">Respond to Complaint:</label>
+
+                  <div className="d-flex flex-column flex-sm-row gap-2">
+                    <select
+                      className="form-select"
+                      value={responseStatus[complaint._id] || ""}
+                      onChange={(e) =>
+                        handleResponseChange(
+                          complaint._id,
+                          e.target.value
+                        )
+                      }
+                    >
+                      <option value="">Select...</option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+
+                    <button
+                      onClick={() =>
+                        handleSubmitResponse(complaint._id)
+                      }
+                      style={{
+                        padding: "6px 12px",
+                        backgroundColor: "#0d6efd",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: "4px",
+                        cursor: "pointer",
+                        minWidth: "120px",
+                        fontSize: "14px",
+                      }}
+                    >
+                      Submit
+                    </button>
+                  </div>
+
+                  {complaint.respondedAt && (
+                    <p
+                      style={{
+                        marginTop: "12px",
+                        color: "gray",
+                        fontStyle: "italic",
+                      }}
+                    >
+                      You once responded to this complaint on{" "}
+                      {formatDate(complaint.respondedAt)}
+                    </p>
+                  )}
+                </div>
+              </div>
+            );
+
+            return (
+              <div className="row align-items-center mb-5" key={complaint._id}>
+                {isEven ? (
+                  <>
+                    {descSection}
+                    {mediaSection}
+                  </>
+                ) : (
+                  <>
+                    {mediaSection}
+                    {descSection}
+                  </>
+                )}
+                <hr className="my-4" />
+              </div>
+            );
+          })}
+        </div>
+      </main>
+
       <AdminFooter />
-    </>
+    </div>
   );
 }
 

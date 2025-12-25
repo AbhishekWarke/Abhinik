@@ -19,7 +19,6 @@ function ServicingRecord() {
     const fetchContract = async () => {
       try {
         if (!userEmail) {
-          console.log("User email not found.");
           setLoading(false);
           return;
         }
@@ -30,8 +29,6 @@ function ServicingRecord() {
         if (data && data.contractNumber) {
           setContract(data);
           await fetchServicings(data.contractNumber);
-        } else {
-          console.log("No contract found");
         }
       } catch (err) {
         console.error("Error fetching contract:", err);
@@ -44,11 +41,9 @@ function ServicingRecord() {
       try {
         const res = await fetch(`${API_URL}/servicing/${contractNumber}`);
         const data = await res.json();
-
         const sortedData = data.sort(
           (a, b) => a.servicingNumber - b.servicingNumber
         );
-
         setServicingRecords(sortedData);
       } catch (err) {
         console.error("Error fetching servicings:", err);
@@ -58,7 +53,6 @@ function ServicingRecord() {
     fetchContract();
   }, [userEmail]);
 
-  // Open modal and show all photos for a servicing record
   const handleViewPhotos = (photos) => {
     if (!photos || photos.length === 0) return;
     setSelectedPhotos(
@@ -67,205 +61,243 @@ function ServicingRecord() {
     setShowPhotosModal(true);
   };
 
-  // Close photos modal
   const closePhotosModal = () => {
     setShowPhotosModal(false);
     setSelectedPhotos([]);
   };
 
   return (
-    <>
+    <div className="servicing-page-wrapper">
       <CustomerNavbar />
-      <div
-        className="container py-4"
-        style={{ fontFamily: "Segoe UI, sans-serif" }}
-      >
-        {loading ? (
-          <h3 className="text-center">Loading your contract details...</h3>
-        ) : contract ? (
-          <>
-            <h3 className="text-center mb-3 fw-bold text-primary">
-              Hello, {contract.customerName}.
-            </h3>
-            <p className="text-center fs-5 text-secondary">
-              According to your contract, you are entitled to{" "}
-              {contract.numberOfServices} servicing
-              {contract.numberOfServices > 1 ? "s" : ""} within a one-year
-              period.
-            </p>
-            <p className="text-center fs-6 text-muted">
-              So far, {servicingRecords.length} servicing
-              {servicingRecords.length !== 1 ? "s" : ""} have been completed for
-              your lift.
-            </p>
 
-            <div className="d-flex flex-wrap justify-content-center gap-4 mt-4">
-              {servicingRecords.map((record, index) => {
-                const isHovered = hoveredCard === index;
+      <main className="servicing-page-content">
+        <div
+          className="container py-4 servicing-container"
+          style={{ fontFamily: "Segoe UI, sans-serif" }}
+        >
+          {loading ? (
+            <h3 className="text-center">Loading your contract details...</h3>
+          ) : contract ? (
+            <>
+              <h3 className="text-center mb-3 fw-bold text-primary">
+                Hello, {contract.customerName}.
+              </h3>
 
-                return (
-                  <div
-                    key={index}
-                    className="card"
-                    style={{
-                      width: "18rem",
-                      boxShadow: isHovered
-                        ? "0 12px 20px rgba(0,0,0,0.3)"
-                        : "0 4px 8px rgba(0,0,0,0.1)",
-                      transition: "all 0.3s ease",
-                      transform: isHovered ? "translateY(-8px)" : "translateY(0)",
-                      cursor: "pointer",
-                      borderRadius: "0.375rem",
-                    }}
-                    onMouseEnter={() => setHoveredCard(index)}
-                    onMouseLeave={() => setHoveredCard(null)}
-                  >
-                    {record.photos && record.photos.length > 0 && (
-                      <img
-                        src={`${FILES_URL}/${record.photos[0].replace(
-                          /\\/g,
-                          "/"
-                        )}`}
-                        alt="Servicing Photo 1"
-                        style={{
-                          width: "100%",
-                          height: "180px",
-                          objectFit: "cover",
-                          borderTopLeftRadius: "0.375rem",
-                          borderTopRightRadius: "0.375rem",
-                          boxShadow: "0 0 5px rgba(0,0,0,0.1)",
-                        }}
-                      />
-                    )}
+              <p className="text-center fs-5 text-secondary">
+                According to your contract, you are entitled to{" "}
+                {contract.numberOfServices} servicing
+                {contract.numberOfServices > 1 ? "s" : ""} within a one-year
+                period.
+              </p>
 
-                    <div className="card-body">
-                      <h5 className="card-title">
-                        Servicing #{record.servicingNumber}
-                      </h5>
-                      <p
-                        className="card-text text-muted"
-                        style={{ fontSize: "0.9rem" }}
-                      >
-                        {record.remark ? record.remark : "No remarks"}
-                      </p>
-                    </div>
-                    <ul className="list-group list-group-flush">
-                      <li className="list-group-item">
-                        <strong>Servicing Date:</strong>{" "}
-                        {record.servicingDate
-                          ? new Date(record.servicingDate).toLocaleDateString()
-                          : "Date not available"}
-                      </li>
-                    </ul>
+              <p className="text-center fs-6 text-muted">
+                So far, {servicingRecords.length} servicing
+                {servicingRecords.length !== 1 ? "s" : ""} have been completed
+                for your lift.
+              </p>
+
+              <div className="d-flex flex-wrap justify-content-center gap-4 mt-4">
+                {servicingRecords.map((record, index) => {
+                  const isHovered = hoveredCard === index;
+
+                  return (
                     <div
-                      className="card-body d-flex justify-content-between gap-2"
-                      style={{ flexWrap: "wrap", rowGap: "0.5rem" }}
+                      key={index}
+                      className="card servicing-card"
+                      style={{
+                        width: "18rem",
+                        boxShadow: isHovered
+                          ? "0 12px 20px rgba(0,0,0,0.3)"
+                          : "0 4px 8px rgba(0,0,0,0.1)",
+                        transition: "all 0.3s ease",
+                        transform: isHovered
+                          ? "translateY(-8px)"
+                          : "translateY(0)",
+                        cursor: "pointer",
+                        borderRadius: "0.375rem",
+                      }}
+                      onMouseEnter={() => setHoveredCard(index)}
+                      onMouseLeave={() => setHoveredCard(null)}
                     >
-                      <a
-                        href={`${FILES_URL}/${record.receipt.replace(
-                          /\\/g,
-                          "/"
-                        )}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-outline-primary view-receipt-btn"
-                        style={{ flex: "1 1 45%", whiteSpace: "nowrap" }}
-                      >
-                        📄 View Receipt
-                      </a>
-
-                      {record.photos && record.photos.length > 0 ? (
-                        <button
-                          className="btn btn-outline-secondary view-photos-btn"
-                          onClick={() => handleViewPhotos(record.photos)}
-                          style={{ flex: "1 1 45%", whiteSpace: "nowrap" }}
-                        >
-                          🖼️ View Photos ({record.photos.length})
-                        </button>
-                      ) : (
-                        <span
-                          className="text-muted"
-                          style={{
-                            flex: "1 1 45%",
-                            fontSize: "0.9rem",
-                            alignSelf: "center",
-                          }}
-                        >
-                          No photos available
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Photos Modal */}
-            {showPhotosModal && (
-              <div
-                className="modal fade show d-block"
-                tabIndex="-1"
-                role="dialog"
-                style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
-                onClick={closePhotosModal}
-              >
-                <div
-                  className="modal-dialog modal-lg modal-dialog-centered"
-                  role="document"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5 className="modal-title">Servicing Photos</h5>
-                      <button
-                        type="button"
-                        className="btn-close"
-                        onClick={closePhotosModal}
-                        aria-label="Close"
-                      />
-                    </div>
-                    <div className="modal-body d-flex flex-wrap gap-3 justify-content-center">
-                      {selectedPhotos.map((photoUrl, idx) => (
+                      {record.photos && record.photos.length > 0 && (
                         <img
-                          key={idx}
-                          src={photoUrl}
-                          alt={`Servicing Photo ${idx + 1}`}
-                          style={{
-                            maxHeight: "250px",
-                            borderRadius: "0.5rem",
-                            boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-                            objectFit: "cover",
-                          }}
+                          src={`${FILES_URL}/${record.photos[0].replace(
+                            /\\/g,
+                            "/"
+                          )}`}
+                          alt="Servicing"
+                          className="servicing-image"
                         />
-                      ))}
+                      )}
+
+                      <div className="card-body">
+                        <h5 className="card-title">
+                          Servicing #{record.servicingNumber}
+                        </h5>
+                        <p className="card-text text-muted servicing-remark">
+                          {record.remark || "No remarks"}
+                        </p>
+                      </div>
+
+                      <ul className="list-group list-group-flush">
+                        <li className="list-group-item">
+                          <strong>Servicing Date:</strong>{" "}
+                          {record.servicingDate
+                            ? new Date(
+                                record.servicingDate
+                              ).toLocaleDateString()
+                            : "Date not available"}
+                        </li>
+                      </ul>
+
+                      <div className="card-body d-flex justify-content-between gap-2 flex-wrap">
+                        <a
+                          href={`${FILES_URL}/${record.receipt.replace(
+                            /\\/g,
+                            "/"
+                          )}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-outline-primary view-receipt-btn"
+                        >
+                          📄 View Receipt
+                        </a>
+
+                        {record.photos && record.photos.length > 0 ? (
+                          <button
+                            className="btn btn-outline-secondary view-photos-btn"
+                            onClick={() =>
+                              handleViewPhotos(record.photos)
+                            }
+                          >
+                            🖼️ View Photos ({record.photos.length})
+                          </button>
+                        ) : (
+                          <span className="text-muted no-photo-text">
+                            No photos available
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {showPhotosModal && (
+                <div
+                  className="modal fade show d-block"
+                  style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
+                  onClick={closePhotosModal}
+                >
+                  <div
+                    className="modal-dialog modal-lg modal-dialog-centered"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title">Servicing Photos</h5>
+                        <button
+                          className="btn-close"
+                          onClick={closePhotosModal}
+                        />
+                      </div>
+
+                      <div className="modal-body d-flex flex-wrap gap-3 justify-content-center">
+                        {selectedPhotos.map((photoUrl, idx) => (
+                          <img
+                            key={idx}
+                            src={photoUrl}
+                            alt="Servicing"
+                            className="modal-photo"
+                          />
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </>
-        ) : (
-          <h3 className="text-center">No contract found for your account.</h3>
-        )}
-      </div>
+              )}
+            </>
+          ) : (
+            <h3 className="text-center">
+              No contract found for your account.
+            </h3>
+          )}
+        </div>
+      </main>
 
-      {/* Inline styles for button hover effects */}
-      <style>
-        {`
-          .view-receipt-btn:hover {
-            background-color: #007bff !important;
-            color: white !important;
-            border-color: #007bff !important;
+      <style>{`
+        .servicing-page-wrapper {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .servicing-page-content {
+          flex: 1;
+        }
+
+        .servicing-container {
+          max-width: 1200px;
+        }
+
+        .servicing-image {
+          width: 100%;
+          height: 180px;
+          object-fit: cover;
+          border-top-left-radius: 0.375rem;
+          border-top-right-radius: 0.375rem;
+          box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        .servicing-remark {
+          font-size: 0.9rem;
+        }
+
+        .no-photo-text {
+          font-size: 0.9rem;
+          align-self: center;
+        }
+
+        .modal-photo {
+          max-height: 250px;
+          border-radius: 0.5rem;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+          object-fit: cover;
+        }
+
+        .view-receipt-btn:hover {
+          background-color: #007bff !important;
+          color: white !important;
+          border-color: #007bff !important;
+        }
+
+        .view-photos-btn:hover {
+          background-color: #28a745 !important;
+          color: white !important;
+          border-color: #28a745 !important;
+        }
+
+        @media (max-width: 576px) {
+          .servicing-card {
+            width: 100% !important;
           }
-          .view-photos-btn:hover {
-            background-color: #28a745 !important;
-            color: white !important;
-            border-color: #28a745 !important;
+        }
+
+        @media (min-width: 577px) and (max-width: 991px) {
+          .servicing-card {
+            width: 16rem !important;
           }
-        `}
-      </style>
+        }
+
+        @media (min-width: 1200px) {
+          .servicing-card {
+            width: 18rem;
+          }
+        }
+      `}</style>
+
       <CustomerFooter />
-    </>
+    </div>
   );
 }
 

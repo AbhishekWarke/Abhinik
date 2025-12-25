@@ -13,97 +13,210 @@ function Footer() {
 
   return (
     <>
-      <hr style={{ borderTop: "1px solid #d1d5db" }} /> {/* light gray line */}
-      <footer style={{ backgroundColor: "#f7f7f7" }}> {/* slight gray */}
-        <div className="container border-top mt-5">
-          <div className="row mt-5">
-            <div className="col-3">
+      <footer className="modern-footer">
+        <div className="container footer-inner">
+          <div className="row footer-main">
+            {/* BRAND */}
+            <div className="col-lg-3 footer-col">
               <Link to="/">
-                <img src="/Media/Logo.png" alt="AbhiNik Logo" style={{ width: "50%" }} />
+                <img
+                  src="/Media/Logo.png"
+                  alt="AbhiNik Logo"
+                  className="footer-logo"
+                />
               </Link>
-              <p className="text-muted mt-3" style={{ fontSize: "0.8em" }}>
-                © 2025, AbhiNik Lift Services Ltd. <br />
+              <p className="footer-copy">
+                © 2025 AbhiNik Lift Services Ltd.<br />
                 All rights reserved.
               </p>
             </div>
 
-            <div className="col-3" style={{ lineHeight: "1.8" }}>
-              <p style={{ fontSize: "1.25rem", fontWeight: "bold" }}>Company</p>
-              <Link to="/about">About Us</Link><br />
-              <Link to="/services">Services</Link><br />
-              <Link to="/pricing">Pricing</Link><br />
+            {/* COMPANY */}
+            <div className="col-lg-3 footer-col">
+              <h6 className="footer-heading">Company</h6>
+              <Link to="/about">About Us</Link>
+              <Link to="/services">Services</Link>
+              <Link to="/pricing">Pricing</Link>
             </div>
 
-            <div className="col-3" style={{ lineHeight: "1.8" }}>
-              <p style={{ fontSize: "1.25rem", fontWeight: "bold" }}>Support</p>
-              <Link to="/contact">Contact</Link><br />
-              <Link to="/login">Service Portal</Link><br />
-              <Link to="/login">Help Center</Link><br />
-              <Link to="/login">Complaints</Link><br />
+            {/* SUPPORT */}
+            <div className="col-lg-3 footer-col">
+              <h6 className="footer-heading">Support</h6>
+              <Link to="/contact">Contact</Link>
+              <Link to="/login">Service Portal</Link>
+              <Link to="/login">Help Center</Link>
+              <Link to="/login">Complaints</Link>
             </div>
 
-            <div className="col-3" style={{ lineHeight: "1.8" }}>
-              <p style={{ fontSize: "1.25rem", fontWeight: "bold" }}>Account</p>
-              <a href="#" onClick={handleProtectedClick}>View Service Records</a><br />
-              <a href="#" onClick={handleProtectedClick}>Service Requests</a><br />
-              <Link to="/signup">Manage Account</Link><br />
+            {/* ACCOUNT */}
+            <div className="col-lg-3 footer-col">
+              <h6 className="footer-heading">Account</h6>
+              <a href="#" onClick={handleProtectedClick}>
+                View Service Records
+              </a>
+              <a href="#" onClick={handleProtectedClick}>
+                Service Requests
+              </a>
+              <Link to="/signup">Manage Account</Link>
             </div>
           </div>
 
-          <div className="mt-5 text-muted" style={{ fontSize: "0.9em", lineHeight: "1.8" }}>
+          {/* BOTTOM TEXT */}
+          <div className="footer-bottom">
             <p>
-              AbhiNik Lift Services Ltd. is a leading provider of lift maintenance, repair, and installation services.
-              Our registered office is located in [City, Country]. All service contracts and records are available
+              AbhiNik Lift Services Ltd. is a trusted provider of elevator
+              installation, maintenance, and repair solutions. All contracts,
+              servicing records, and support requests are securely managed
               through our platform.
             </p>
-
             <p>
-              For complaints, issues, or feedback, please reach out to <strong> abhinik.elevator@gmail.com </strong>
+              For feedback or support, contact{" "}
+              <strong>abhinik.elevator@gmail.com</strong>
             </p>
           </div>
         </div>
 
-        {/* Popup Modal */}
+        {/* POPUP MODAL (UNCHANGED LOGIC) */}
         {showPopup && (
-          <div style={{
-            position: "fixed",
-            top: 0, left: 0,
-            width: "100%", height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            zIndex: 9999
-          }}>
-            <div style={{
-              backgroundColor: "#fff",
-              padding: "2rem",
-              borderRadius: "10px",
-              width: "90%", maxWidth: "500px",
-              textAlign: "center",
-              boxShadow: "0px 0px 10px rgba(0,0,0,0.2)"
-            }}>
-              <p style={{ fontSize: "1.1rem", marginBottom: "1.5rem" }}>
+          <div className="footer-popup-overlay">
+            <div className="footer-popup">
+              <p>
                 To access AbhiNik’s services, please log in or sign up first.
               </p>
               <img
                 src="/Media/Logo.png"
                 alt="AbhiNik Logo"
-                style={{ width: "150px", marginTop: "10px" }}
+                className="popup-logo"
               />
-              <button onClick={closePopup} style={{
-                marginTop: "1.5rem",
-                backgroundColor: "#424242",
-                color: "#fff",
-                padding: "0.5rem 1rem",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer"
-              }}>
-                Close
-              </button>
+              <button onClick={closePopup}>Close</button>
             </div>
           </div>
         )}
       </footer>
+
+      {/* =========================
+          MODERN FOOTER STYLES
+      ========================== */}
+      <style>{`
+        .modern-footer {
+          background-color: #f8f9fa;
+          padding: 4rem 0 2rem;
+          border-top: 1px solid #e5e7eb;
+        }
+
+        .footer-inner {
+          max-width: 1200px;
+        }
+
+        .footer-main {
+          margin-bottom: 3rem;
+        }
+
+        .footer-col {
+          display: flex;
+          flex-direction: column;
+          gap: 0.6rem;
+        }
+
+        .footer-logo {
+          width: 130px;
+          margin-bottom: 1rem;
+        }
+
+        .footer-copy {
+          font-size: 0.85rem;
+          color: #6b7280;
+          line-height: 1.6;
+        }
+
+        .footer-heading {
+          font-size: 0.95rem;
+          font-weight: 600;
+          margin-bottom: 0.6rem;
+          color: #111827;
+        }
+
+        .footer-col a {
+          font-size: 0.9rem;
+          color: #374151;
+          text-decoration: none;
+          transition: color 0.2s ease;
+        }
+
+        .footer-col a:hover {
+          color: #0d6efd;
+        }
+
+        .footer-bottom {
+          border-top: 1px solid #e5e7eb;
+          padding-top: 1.5rem;
+          font-size: 0.9rem;
+          color: #6b7280;
+          line-height: 1.7;
+          text-align: center;
+        }
+
+        /* =========================
+           POPUP MODAL STYLES
+        ========================== */
+        .footer-popup-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.5);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+        }
+
+        .footer-popup {
+          background: #fff;
+          padding: 2rem;
+          border-radius: 12px;
+          width: 90%;
+          max-width: 420px;
+          text-align: center;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .footer-popup p {
+          font-size: 1rem;
+          margin-bottom: 1.2rem;
+        }
+
+        .popup-logo {
+          width: 140px;
+          margin-bottom: 1.2rem;
+        }
+
+        .footer-popup button {
+          background-color: #111827;
+          color: #fff;
+          border: none;
+          padding: 0.5rem 1.2rem;
+          border-radius: 6px;
+          cursor: pointer;
+        }
+
+        /* =========================
+           MOBILE RESPONSIVE
+        ========================== */
+        @media (max-width: 576px) {
+          .footer-main {
+            text-align: center;
+          }
+
+          .footer-col {
+            margin-bottom: 2rem;
+            align-items: center;
+          }
+
+          .footer-bottom {
+            text-align: justify;
+            font-size: 0.85rem;
+          }
+        }
+      `}</style>
     </>
   );
 }

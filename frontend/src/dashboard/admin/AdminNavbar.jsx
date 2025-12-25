@@ -17,19 +17,20 @@ function AdminNavbar() {
   };
 
   return (
-    <nav
-      className="navbar navbar-expand-lg"
-      style={{ backgroundColor: "#f8f9fa" }}
-    >
-      <div className="container-fluid px-4">
-        <Link className="navbar-brand" to="/admin-dashboard">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+      <div className="container-fluid px-3 px-md-4">
+        
+        {/* Logo */}
+        <Link className="navbar-brand d-flex align-items-center" to="/admin-dashboard">
           <img
             src="/Media/Logo.png"
             alt="Abhinik Logo"
-            style={{ height: "25px", width: "auto" }}
+            className="img-fluid"
+            style={{ height: "25px" }}
           />
         </Link>
 
+        {/* Mobile Toggle */}
         <button
           className="navbar-toggler"
           type="button"
@@ -42,51 +43,52 @@ function AdminNavbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
 
+        {/* Menu */}
         <div
           className="collapse navbar-collapse justify-content-end"
           id="navbarSupportedContent"
         >
-          <ul className="navbar-nav mb-2 mb-lg-0">
+          <ul className="navbar-nav mt-3 mt-lg-0 text-center text-lg-start">
+            
             <li className="nav-item">
-              <Link className="nav-link" to="/admin-dashboard/contracts">
+              <Link className="nav-link px-lg-3" to="/admin-dashboard/contracts">
                 Manage Contracts
               </Link>
             </li>
+
             <li className="nav-item">
-              <Link className="nav-link" to="/admin-dashboard/servicing">
+              <Link className="nav-link px-lg-3" to="/admin-dashboard/servicing">
                 Update Servicing
               </Link>
             </li>
+
             <li className="nav-item">
-              <Link className="nav-link" to="/admin-dashboard/complaints">
+              <Link className="nav-link px-lg-3" to="/admin-dashboard/complaints">
                 View Complaints
               </Link>
             </li>
+
+            {/* Divider for mobile */}
+            <li className="nav-item d-lg-none">
+              <hr className="my-2" />
+            </li>
+
+            {/* Logout */}
             <li className="nav-item">
               <button
                 onClick={handleLogout}
                 onMouseEnter={() => setHoverLogout(true)}
                 onMouseLeave={() => setHoverLogout(false)}
+                className="nav-link btn btn-link px-lg-3"
                 style={{
-                  background: "none",
-                  border: "none",
-                  padding: 0,
-                  margin: 0,
-                  cursor: "pointer",
+                  color: hoverLogout ? "red" : "black",
+                  textDecoration: "none",
                 }}
               >
-                <span
-                  className="nav-link"
-                  style={{
-                    color: hoverLogout ? "red" : "black",
-                    fontWeight: "normal",
-                    fontFamily: "inherit",
-                  }}
-                >
-                  Logout
-                </span>
+                Logout
               </button>
             </li>
+
           </ul>
         </div>
       </div>

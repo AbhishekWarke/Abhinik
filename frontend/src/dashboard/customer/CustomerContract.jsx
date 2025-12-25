@@ -302,4 +302,33 @@ const modalContentStyle = {
   textAlign: "center",
 };
 
+<style>{`
+  /* =========================
+     MOBILE RESPONSIVENESS ONLY
+     (NO DESIGN CHANGE)
+  ========================= */
+
+  @media (max-width: 768px) {
+    /* Stack cards vertically */
+    .hover-card {
+      max-width: 100% !important;
+      min-width: unset !important;
+    }
+
+    /* Reduce lift image height slightly on small screens */
+    .hover-card img {
+      height: 160px !important;
+    }
+  }
+
+  /* Disable hover lift on touch devices (no hover concept) */
+  @media (hover: none) {
+    .hover-card:hover {
+      transform: none;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    }
+  }
+`}</style>
+
+
 export default CustomerContract;

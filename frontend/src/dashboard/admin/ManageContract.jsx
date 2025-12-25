@@ -76,7 +76,7 @@ function ManageContract() {
       };
 
       await uploadContract(formData);
-      setShowSuccess(true); 
+      setShowSuccess(true);
 
       setContractDetails({
         customerName: "",
@@ -101,43 +101,45 @@ function ManageContract() {
   return (
     <>
       <AdminNavbar />
-      <section className="manage-contract section">
-        <div className="text-center mb-4">
-          <h2 className="fw-bold mb-4">
+
+      <section className="manage-contract section py-4">
+        {/* Header */}
+        <div className="text-center mb-4 px-3">
+          <h2 className="fw-bold">
             <span style={{ color: "red" }}>Abhi</span>
             <span style={{ color: "blue" }}>Nik</span> CUSTOMER CONTRACT
           </h2>
         </div>
 
-        <div className="mb-4 px-4">
-          <div className="row gx-5">
-            <div className="col-md-6 mb-3 text-muted">
+        {/* Instructions */}
+        <div className="container mb-4">
+          <div className="row text-muted small">
+            <div className="col-12 col-md-6 mb-2">
               • Ensure all details are correct before submitting.
             </div>
-            <div className="col-md-6 mb-3 text-muted">
-              • Uploaded contracts will be stored permanently and visible to
-              customers.
+            <div className="col-12 col-md-6 mb-2">
+              • Uploaded contracts will be permanently visible to customers.
             </div>
-            <div className="col-md-6 mb-3 text-muted">
-              • Double-check start/end dates and PDF upload before proceeding.
+            <div className="col-12 col-md-6 mb-2">
+              • Double-check start/end dates and PDF upload.
             </div>
-            <div className="col-md-6 mb-3 text-muted">
-              • If you realize a mistake after submission, delete the contract
-              from the dashboard and re-upload it correctly.
+            <div className="col-12 col-md-6 mb-2">
+              • If mistaken, delete the contract and re-upload correctly.
             </div>
           </div>
         </div>
 
+        {/* Form Card */}
         <div className="container">
-          <div className="inner">
-            <h2 className="text-center mt-2">Add Contract Details</h2>
-            <p>
+          <div className="inner mx-auto">
+            <h2 className="text-center mb-2">Add Contract Details</h2>
+            <p className="text-center text-muted mb-4">
               Enter contract information to keep everything tracked and updated.
             </p>
 
             <form className="form" onSubmit={handleSubmit}>
-              <div className="row">
-                <div className="form-group col-md-6">
+              <div className="row g-3">
+                <div className="col-12 col-md-6">
                   <input
                     type="text"
                     name="customerName"
@@ -146,13 +148,11 @@ function ManageContract() {
                     onChange={handleChange}
                   />
                   {formErrors.customerName && (
-                    <small className="text-danger">
-                      {formErrors.customerName}
-                    </small>
+                    <small className="text-danger">{formErrors.customerName}</small>
                   )}
                 </div>
 
-                <div className="form-group col-md-6">
+                <div className="col-12 col-md-6">
                   <input
                     type="email"
                     name="customerEmail"
@@ -161,13 +161,11 @@ function ManageContract() {
                     onChange={handleChange}
                   />
                   {formErrors.customerEmail && (
-                    <small className="text-danger">
-                      {formErrors.customerEmail}
-                    </small>
+                    <small className="text-danger">{formErrors.customerEmail}</small>
                   )}
                 </div>
 
-                <div className="form-group col-md-6">
+                <div className="col-12 col-md-6">
                   <input
                     type="text"
                     name="contractNumber"
@@ -176,13 +174,11 @@ function ManageContract() {
                     onChange={handleChange}
                   />
                   {formErrors.contractNumber && (
-                    <small className="text-danger">
-                      {formErrors.contractNumber}
-                    </small>
+                    <small className="text-danger">{formErrors.contractNumber}</small>
                   )}
                 </div>
 
-                <div className="form-group col-md-6">
+                <div className="col-12 col-md-6">
                   <select
                     name="contractType"
                     value={contractDetails.contractType}
@@ -193,13 +189,11 @@ function ManageContract() {
                     <option value="Half-Yearly">Half-Yearly</option>
                   </select>
                   {formErrors.contractType && (
-                    <small className="text-danger">
-                      {formErrors.contractType}
-                    </small>
+                    <small className="text-danger">{formErrors.contractType}</small>
                   )}
                 </div>
 
-                <div className="form-group col-md-6">
+                <div className="col-12 col-md-6">
                   <label className="input-label">Start Date</label>
                   <input
                     type="date"
@@ -208,13 +202,11 @@ function ManageContract() {
                     onChange={handleChange}
                   />
                   {formErrors.startDate && (
-                    <small className="text-danger">
-                      {formErrors.startDate}
-                    </small>
+                    <small className="text-danger">{formErrors.startDate}</small>
                   )}
                 </div>
 
-                <div className="form-group col-md-6">
+                <div className="col-12 col-md-6">
                   <label className="input-label">End Date</label>
                   <input
                     type="date"
@@ -227,13 +219,11 @@ function ManageContract() {
                   )}
                 </div>
 
-                <div className="form-group col-md-6">
-                  <label htmlFor="numberOfServices">Number of Servicing</label>
+                <div className="col-12 col-md-6">
+                  <label>Number of Servicing</label>
                   <input
                     type="number"
-                    id="numberOfServices"
                     name="numberOfServices"
-                    className="form-control"
                     placeholder="Enter No. of Servicing"
                     value={contractDetails.numberOfServices}
                     onChange={handleChange}
@@ -245,78 +235,51 @@ function ManageContract() {
                   )}
                 </div>
 
-                <div className="form-group col-md-6">
-                  <label htmlFor="contractPrice">Price</label>
+                <div className="col-12 col-md-6">
+                  <label>Price</label>
                   <input
                     type="number"
-                    id="contractPrice"
                     name="contractPrice"
-                    className="form-control"
                     placeholder="Enter Price"
                     value={contractDetails.contractPrice}
                     onChange={handleChange}
-                    min="0"
-                    step="0.01"
                   />
                   {formErrors.price && (
                     <small className="text-danger">{formErrors.price}</small>
                   )}
                 </div>
 
-                <div className="form-group col-12 d-flex justify-content-center">
-                  <div>
+                {/* PDF Upload */}
+                <div className="col-12 text-center">
+                  <label className="mb-2 d-block">Upload Contract PDF</label>
+                  <div className="custom-file-input-wrapper flex-wrap">
                     <label
                       htmlFor="contractPDF"
-                      style={{
-                        display: "block",
-                        textAlign: "center",
-                        marginBottom: "0.5rem",
-                      }}
+                      className="custom-file-label"
                     >
-                      Upload Contract PDF
+                      Choose PDF
                     </label>
-                    <div
-                      className="custom-file-input-wrapper"
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        gap: "1rem",
-                      }}
-                    >
-                      <label
-                        htmlFor="contractPDF"
-                        className="custom-file-label"
-                        style={{ cursor: "pointer" }}
-                      >
-                        Choose PDF
-                      </label>
-                      <input
-                        type="file"
-                        id="contractPDF"
-                        name="contractPDF"
-                        accept=".pdf"
-                        className="hidden-file-input"
-                        onChange={handleFileChange}
-                        style={{ display: "none" }}
-                      />
-                      <span id="file-name" className="file-name-text">
-                        No file chosen
-                      </span>
-                    </div>
-                    {formErrors.contractPDF && (
-                      <small
-                        className="text-danger"
-                        style={{ display: "block", textAlign: "center" }}
-                      >
-                        {formErrors.contractPDF}
-                      </small>
-                    )}
+                    <input
+                      type="file"
+                      id="contractPDF"
+                      accept=".pdf"
+                      onChange={handleFileChange}
+                      style={{ display: "none" }}
+                    />
+                    <span id="file-name" className="file-name-text">
+                      No file chosen
+                    </span>
                   </div>
+                  {formErrors.contractPDF && (
+                    <small className="text-danger d-block mt-1">
+                      {formErrors.contractPDF}
+                    </small>
+                  )}
                 </div>
 
-                <div className="form-group col-12">
-                  <button className="btn submit-button" type="submit">
+                {/* Submit */}
+                <div className="col-12">
+                  <button className="btn submit-button w-100" type="submit">
                     Save Contract
                   </button>
                 </div>
@@ -325,16 +288,16 @@ function ManageContract() {
           </div>
         </div>
 
-        <div className="text-center mt-5">
-          <p className="text-muted">
+        {/* Footer note */}
+        <div className="text-center mt-5 px-3">
+          <p className="text-muted small">
             Want to view all added contracts? Head over to your{" "}
-            <strong>Admin Dashboard</strong> to see a summary of customer
-            contracts.
+            <strong>Admin Dashboard</strong>.
           </p>
         </div>
       </section>
 
-      {/* ✅ Final & Corrected Pop-up Code */}
+      {/* Success Popup */}
       {showSuccess && (
         <div
           className="contract-popup-overlay"
@@ -344,13 +307,11 @@ function ManageContract() {
             className="contract-popup-content"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 style={{ fontWeight: '600', marginBottom: '10px', fontSize: '20px' }}>
-              <span style={{ color: 'red' }}>Abhi</span>
-              <span style={{ color: 'blue' }}>Nik</span>
+            <h3 style={{ fontWeight: 600, fontSize: "20px" }}>
+              <span style={{ color: "red" }}>Abhi</span>
+              <span style={{ color: "blue" }}>Nik</span>
             </h3>
-            <p style={{ fontSize: '16px' }}>
-              ✅ Contract Added Successfully
-            </p>
+            <p className="mt-2">✅ Contract Added Successfully</p>
           </div>
         </div>
       )}

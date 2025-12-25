@@ -2,27 +2,102 @@ import React from "react";
 
 function CallBased() {
   return (
-    <div className="container">
-      <div className="row mt-5 mb-5">
-        <h1 className="mt-5">Pricing is based on - </h1>
-        <h2 className="text-muted mt-5 text-center">Call Based Services</h2>
-        <p className="mt-4" style={{ fontSize: "1.2rem", fontWeight: "300" }}>
-          AbhiNik Elevators offers convenient call-based services at your doorstep. The pricing for these services varies between{" "}
-          <i className="fa fa-inr" aria-hidden="true"></i> 2000 to{" "}
-          <i className="fa fa-inr" aria-hidden="true"></i> 2500, depending on the location of your residence or building. Our expert technicians
-          will ensure that your elevators are promptly serviced, with the most competitive rates tailored to your specific needs.
-        </p>
-        <p className="mt-4" style={{ fontSize: "1.2rem", fontWeight: "300" }}>
-          Whether it's a minor repair, inspection, or troubleshooting, our call-based service provides a fast and efficient solution. 
-          Our team is available at your convenience, ensuring minimal disruption to your daily operations. Pricing flexibility is offered to 
-          accommodate the variety of requirements for different buildings and residential areas, so you always get the best value.
-        </p>
-        <p className="mt-4" style={{ fontSize: "1.2rem", fontWeight: "300" }}>
-          We strive to make elevator maintenance affordable, accessible, and hassle-free for all our customers. Reach out to us today to get a 
-          custom quote and schedule a visit from our skilled technicians. Your safety and satisfaction are our top priority!
-        </p>
-      </div>
-    </div>
+    <>
+      <section className="callbased-section">
+        <div className="container callbased-inner">
+          <span className="callbased-badge">Flexible & On-Demand</span>
+
+          <h2 className="callbased-title">
+            Call-Based Elevator Services
+          </h2>
+
+          <p className="callbased-text">
+            AbhiNik Elevators provides reliable call-based elevator services
+            delivered directly to your location. Pricing typically ranges between
+            <strong> ₹2,000 </strong> and <strong> ₹2,500 </strong>, depending on
+            your building’s location and service requirements. Our trained
+            technicians ensure quick response times, accurate diagnostics, and
+            cost-effective solutions tailored to your needs.
+          </p>
+
+          <p className="callbased-text">
+            Whether it’s a minor repair, technical inspection, or urgent
+            troubleshooting, our call-based services offer fast and efficient
+            resolution with minimal disruption. Flexible pricing ensures fair
+            service across residential and commercial properties while
+            maintaining high service standards.
+          </p>
+
+          <p className="callbased-text">
+            We believe elevator maintenance should be transparent, accessible,
+            and stress-free. Contact AbhiNik today to schedule a service visit or
+            receive a customized quote — your safety, uptime, and satisfaction
+            remain our top priorities.
+          </p>
+        </div>
+      </section>
+
+      {/* =========================
+          CALL BASED STYLES
+      ========================== */}
+      <style>{`
+        .callbased-section {
+          background-color: #ffffff;
+          padding: 4.5rem 0;
+          border-top: 1px solid #e5e7eb;
+        }
+
+        .callbased-inner {
+          max-width: 820px;
+          margin: 0 auto;
+        }
+
+        .callbased-badge {
+          display: inline-block;
+          background-color: #f1f5f9;
+          color: #0d6efd;
+          padding: 6px 16px;
+          border-radius: 20px;
+          font-size: 0.85rem;
+          font-weight: 500;
+          margin-bottom: 1.2rem;
+        }
+
+        .callbased-title {
+          font-size: 2.2rem;
+          font-weight: 700;
+          margin-bottom: 2rem;
+          color: #212529;
+        }
+
+        .callbased-text {
+          font-size: 1.15rem;
+          font-weight: 300;
+          line-height: 1.8;
+          color: #555;
+          text-align: justify;
+          margin-bottom: 1.6rem;
+        }
+
+        /* =========================
+           MOBILE RESPONSIVE
+        ========================== */
+        @media (max-width: 576px) {
+          .callbased-section {
+            padding: 3rem 0;
+          }
+
+          .callbased-title {
+            font-size: 1.6rem;
+          }
+
+          .callbased-text {
+            font-size: 1rem;
+            line-height: 1.7;
+          }
+        }
+      `}</style>
+    </>
   );
 }
 

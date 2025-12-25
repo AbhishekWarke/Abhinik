@@ -7,7 +7,7 @@ function Hero() {
       style={{
         position: "relative",
         width: "100%",
-        height: "250px",  // Reduced height from 400px to 250px
+        height: "250px", // unchanged
         backgroundImage: "url('/Media/Contactus.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -21,12 +21,24 @@ function Hero() {
           left: "50%",
           transform: "translate(-50%, -50%)",
           color: "white",
-          fontSize: "2.5rem",
-          fontWeight: "300",  // Changed to lighter font weight
+          fontSize: "2.5rem", // desktop unchanged
+          fontWeight: "300",
+          textAlign: "center",
+          padding: "0 1rem", // ✅ prevents edge overflow on mobile
         }}
       >
         Contact us for more information & assistance
       </div>
+
+      {/* ✅ MOBILE-ONLY FIX */}
+      <style>{`
+        @media (max-width: 576px) {
+          .hero-text {
+            font-size: 1.4rem; /* 🔴 explicit mobile fix */
+            line-height: 1.4;
+          }
+        }
+      `}</style>
     </div>
   );
 }

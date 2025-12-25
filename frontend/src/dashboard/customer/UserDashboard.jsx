@@ -11,9 +11,9 @@ function UserDashboard() {
   const [userEmail, setUserEmail] = useState(null);
   const [contract, setContract] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [errorMsg, setErrorMsg] = useState(null); // For showing fetch errors
+  const [errorMsg, setErrorMsg] = useState(null);
 
-  const API_URL = import.meta.env.VITE_API_URL; // ✅ Use env variable
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -22,7 +22,7 @@ function UserDashboard() {
       } else if (user.emailVerified) {
         setUserEmail(user.email);
       } else {
-        navigate("/login"); // Redirect if email not verified
+        navigate("/login");
       }
     });
 
@@ -44,7 +44,7 @@ function UserDashboard() {
         if (res.data && Object.keys(res.data).length > 0) {
           setContract(res.data);
         } else {
-          setContract(null); // No contract found
+          setContract(null);
         }
       } catch (err) {
         console.error("Error fetching contract:", err);
@@ -59,22 +59,40 @@ function UserDashboard() {
   }, [userEmail, API_URL]);
 
   return (
-    <div>
+    <div className="user-dashboard-wrapper">
       <CustomerNavbar />
 
-      <div className="container mt-4">
-        {loading && <p>Loading your contract details...</p>}
+      <main className="user-dashboard-content">
+        <div className="container mt-4">
+          {loading && <p>Loading your contract details...</p>}
 
-        {!loading && errorMsg && <p className="text-danger">{errorMsg}</p>}
+          {!loading && errorMsg && (
+            <p className="text-danger">{errorMsg}</p>
+          )}
 
-        {!loading && !errorMsg && !contract && (
-          <p>You do not have any active contracts at the moment.</p>
-        )}
+          {!loading && !errorMsg && !contract && (
+            <p>You do not have any active contracts at the moment.</p>
+          )}
 
-        {!loading && !errorMsg && contract && (
-          <CustomerContract contract={contract} />
-        )}
-      </div>
+          {!loading && !errorMsg && contract && (
+            <CustomerContract contract={contract} />
+          )}
+        </div>
+      </main>
+
+      {/* Page-specific footer fix */}
+      <style>{`
+        .user-dashboard-wrapper {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .user-dashboard-content {
+          flex: 1;
+        }
+      `}</style>
+
       <CustomerFooter />
     </div>
   );

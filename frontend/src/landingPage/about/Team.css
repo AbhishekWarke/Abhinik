@@ -1,32 +1,58 @@
 .flip-container {
-    perspective: 1000px;
-  }
-  
-  .flip-container:hover .flip-card {
-    transform: rotateY(180deg);
-  }
-  
-  .flip-card {
-    width: 100%;
-    height: auto;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    position: relative;
-  }
-  
+  perspective: 1000px;
+}
+
+.flip-container:hover .flip-card {
+  transform: rotateY(180deg);
+}
+
+.flip-card {
+  width: 100%;
+  height: auto;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.flip-card img {
+  width: 60%; /* Desktop size unchanged */
+  height: auto;
+  border-radius: 10%;
+  backface-visibility: hidden;
+}
+
+.flip-card-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+}
+
+/* ============================
+   🔴 MOBILE FIXES (IMPORTANT)
+============================= */
+@media (max-width: 576px) {
+  /* Make image readable */
   .flip-card img {
-    width: 60%; /* Set the width to 60% */
-    height: auto;
-    border-radius: 10%;
-    backface-visibility: hidden;
+    width: 100%; /* ✅ Explicit fix for small image */
   }
-  
-  
-  .flip-card-back {
-    position: absolute;
-    top: 0;
-    left: 0;
-    backface-visibility: hidden;
-    transform: rotateY(180deg);
+
+  /* Stack columns vertically */
+  .flip-container,
+  .paranchorTeam {
+    width: 100% !important;
+    max-width: 100%;
+    text-align: left;
   }
-  
+
+  /* Remove excessive padding on mobile */
+  .paranchorTeam {
+    padding: 1.5rem !important;
+  }
+
+  .flip-container {
+    padding: 1.5rem !important;
+    text-align: center;
+  }
+}

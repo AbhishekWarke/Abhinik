@@ -89,16 +89,19 @@ function ReportProblem() {
   return (
     <>
       <CustomerNavbar />
-      <div className="container mt-5" style={{ fontFamily: "Segoe UI, sans-serif" }}>
-        <h2 className="text-center fw-bold mb-3 text-primary">Report Your Lift Problem to Us</h2>
 
-        <p className="text-center fs-5">
+      <div className="container mt-5 report-container" style={{ fontFamily: "Segoe UI, sans-serif" }}>
+        <h2 className="text-center fw-bold mb-3 text-primary">
+          Report Your Lift Problem to Us
+        </h2>
+
+        <p className="text-center fs-5 helpline-text">
           For instant assistance, call{" "}
           <span style={{ color: "red", fontWeight: "bold" }}>998XX</span>
           <span style={{ color: "blue", fontWeight: "bold" }}>30XX5</span>.
         </p>
 
-        <div className="mt-4 mb-5">
+        <div className="mt-4 mb-5 info-box">
           <h5 className="fw-semibold text-decoration-underline text-dark">Key Points:</h5>
           <ul className="text-muted">
             <li>Provide clear and specific details of the issue.</li>
@@ -117,7 +120,7 @@ function ReportProblem() {
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <textarea
-              className="form-control"
+              className="form-control complaint-textarea"
               rows="5"
               placeholder="Describe the issue..."
               value={problemText}
@@ -142,7 +145,7 @@ function ReportProblem() {
 
           <button
             type="submit"
-            className="btn btn-primary"
+            className="btn btn-primary submit-btn"
             onMouseOver={(e) => {
               e.target.style.backgroundColor = "green";
               e.target.style.borderColor = "green";
@@ -156,23 +159,20 @@ function ReportProblem() {
           </button>
 
           {submitMessage && (
-            <div className="mt-3 text-center fw-medium text-secondary">{submitMessage}</div>
+            <div className="mt-3 text-center fw-medium text-secondary">
+              {submitMessage}
+            </div>
           )}
         </form>
 
         {allComplaints.length > 0 && (
           <div className="mt-5">
-            <h4 className="text-dark fw-semibold mb-3">Your Submitted Complaints</h4>
+            <h4 className="text-dark fw-semibold mb-3">
+              Your Submitted Complaints
+            </h4>
+
             <div className="table-responsive">
-              <table
-                className="table table-bordered table-hover"
-                style={{
-                  borderRadius: "8px",
-                  overflow: "hidden",
-                  boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-                  transition: "all 0.3s ease-in-out",
-                }}
-              >
+              <table className="table table-bordered table-hover complaint-table">
                 <thead className="table-light">
                   <tr>
                     <th>Complaint ID</th>
@@ -183,21 +183,27 @@ function ReportProblem() {
                 </thead>
                 <tbody>
                   {allComplaints.map((item, index) => (
-                    <tr key={index} style={{ transition: "background-color 0.3s ease" }}>
+                    <tr key={index}>
                       <td>{item.complaintId}</td>
                       <td>{new Date(item.createdAt).toLocaleDateString()}</td>
-                      <td>{item.problemDescription}</td>
+                      <td className="complaint-details">
+                        {item.problemDescription}
+                      </td>
                       <td>
                         {item.seenByAdmin ? (
                           <>
-                            <span className="badge bg-success me-2">Acknowledged</span>
+                            <span className="badge bg-success me-2">
+                              Acknowledged
+                            </span>
                             <span className="text-success">
                               AbhiNik Engineers have acknowledged your issue.
                             </span>
                           </>
                         ) : (
                           <>
-                            <span style={{ fontSize: "1.3rem", marginRight: "8px" }}>🟡</span>
+                            <span style={{ fontSize: "1.3rem", marginRight: "8px" }}>
+                              🟡
+                            </span>
                             <span className="text-warning">
                               Complaint received. We’ll get back to you shortly.
                             </span>
@@ -212,6 +218,90 @@ function ReportProblem() {
           </div>
         )}
       </div>
+
+      {/* =========================
+          CSS ONLY (RESPONSIVE)
+      ========================== */}
+      <style>{`
+        .report-container {
+          max-width: 950px;
+        }
+
+        .info-box {
+          background: #f8f9fa;
+          padding: 18px;
+          border-radius: 10px;
+        }
+
+        .complaint-textarea {
+          resize: vertical;
+        }
+
+        .submit-btn {
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .submit-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .complaint-table {
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          transition: all 0.3s ease-in-out;
+        }
+
+        .complaint-details {
+          max-width: 300px;
+          word-wrap: break-word;
+        }
+
+        /* -----------------
+           MOBILE
+        ------------------ */
+        @media (max-width: 576px) {
+          .report-container {
+            padding: 0 12px;
+          }
+
+          h2 {
+            font-size: 20px;
+          }
+
+          .helpline-text {
+            font-size: 15px;
+          }
+
+          .submit-btn {
+            width: 100%;
+          }
+
+          .complaint-details {
+            max-width: 200px;
+          }
+        }
+
+        /* -----------------
+           TABLET
+        ------------------ */
+        @media (min-width: 577px) and (max-width: 991px) {
+          .complaint-details {
+            max-width: 250px;
+          }
+        }
+
+        /* -----------------
+           LARGE SCREENS
+        ------------------ */
+        @media (min-width: 1200px) {
+          .report-container {
+            max-width: 1100px;
+          }
+        }
+      `}</style>
+
       <CustomerFooter />
     </>
   );

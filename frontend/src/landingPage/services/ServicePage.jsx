@@ -22,7 +22,7 @@ function ServicePage() {
       />
 
       <LeftSection
-        imageURL="/Media/Services3.jpg " 
+        imageURL="/Media/Services3.jpg"
         productName="AMC Contracting of Lift"
         productDescription="Protect your investment with our Annual Maintenance Contracts (AMC). Enjoy peace of mind with regular maintenance, priority service, and extended equipment life at affordable pricing."
       />
@@ -35,17 +35,40 @@ function ServicePage() {
 
       <LeftSection
         imageURL="/Media/Service.jpg"
-        productName="Modernization Services" 
+        productName="Modernization Services"
         productDescription="Upgrade your aging lift systems with our modernization solutions. Improve performance, energy efficiency, safety, and aesthetics — giving your old elevators a brand-new life."
       />
 
-      <p className="text-center" style={{ fontSize: "1.25em" }}>
+      {/* FOOTER TEXT */}
+      <p className="servicepage-footer-text">
         Want to learn more about our services and innovations? Explore the{" "}
         <Link style={{ textDecoration: "none" }}>
           AbhiNik Services Blog
         </Link>{" "}
         for detailed insights.
       </p>
+
+      {/* =========================
+          SERVICE PAGE STYLES
+      ========================== */}
+      <style>{`
+        .servicepage-footer-text {
+          font-size: 1.2rem;
+          text-align: justify;
+          margin: 3rem auto 5rem;
+          max-width: 900px;
+          color: #444;
+        }
+
+        @media (max-width: 576px) {
+          .servicepage-footer-text {
+            font-size: 1rem;
+            padding: 0 1rem;
+            line-height: 1.7;
+            margin-bottom: 3rem;
+          }
+        }
+      `}</style>
     </>
   );
 }

@@ -1,6 +1,14 @@
 import React, { useRef, useState, useEffect } from "react";
 import CustomerNavbar from "./CustomerNavbar";
-import { Container, Row, Col, Form, Button, Card, Spinner } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  Card,
+  Spinner,
+} from "react-bootstrap";
 import { FaWhatsapp } from "react-icons/fa";
 import emailjs from "@emailjs/browser";
 import { auth } from "../../firebaseConfig";
@@ -43,7 +51,7 @@ const ContactUs = () => {
 
           setTimeout(() => {
             setShowSuccessOverlay(false);
-          }, 3000); // auto-hide after 3 seconds
+          }, 3000);
         },
         (error) => {
           setIsSubmitting(false);
@@ -56,8 +64,9 @@ const ContactUs = () => {
   return (
     <>
       <CustomerNavbar />
-      <Container className="mt-5 position-relative">
-        {/* ✅ Centered Success Overlay */}
+
+      <Container className="mt-5 mb-5 position-relative">
+        {/* Success Overlay */}
         {showSuccessOverlay && (
           <div
             className="success-overlay"
@@ -72,14 +81,17 @@ const ContactUs = () => {
               borderRadius: "12px",
               zIndex: 9999,
               textAlign: "center",
-              boxShadow: "0 0 20px rgba(0,0,0,0.5)"
+              boxShadow: "0 0 20px rgba(0,0,0,0.5)",
+              maxWidth: "90vw",
             }}
           >
             <h4>
               <span style={{ color: "red" }}>Abhi</span>
               <span style={{ color: "blue" }}>Nik</span>
             </h4>
-            <p className="mt-2 text-success">✅ Mail sent successfully!</p>
+            <p className="mt-2 text-success">
+              ✅ Mail sent successfully!
+            </p>
           </div>
         )}
 
@@ -87,26 +99,29 @@ const ContactUs = () => {
           Contact <span style={{ color: "red" }}>Abhi</span>
           <span style={{ color: "blue" }}>Nik</span>
         </h2>
+
         <p className="text-center text-muted mb-5">
           We're here to help. Reach out anytime!
         </p>
 
         <Row className="g-4 justify-content-center">
-          {/* Left Card */}
-          <Col md={6} className="d-flex justify-content-center" style={{ padding: 0 }}>
+          {/* Company Info */}
+          <Col xs={12} lg={6} className="d-flex justify-content-center">
             <div
-              className={`card-wrapper ${hoveredCard === "left" ? "hover-left" : ""}`}
+              className={`card-wrapper ${
+                hoveredCard === "left" ? "hover-left" : ""
+              }`}
               onMouseEnter={() => setHoveredCard("left")}
               onMouseLeave={() => setHoveredCard(null)}
             >
               <Card className="shadow border-0 h-100">
                 <Card.Body>
-                  <h4 className="text-center mb-4">Company Information</h4>
+                  <h4 className="text-center mb-4">
+                    Company Information
+                  </h4>
                   <p>
                     <strong>About AbhiNik:</strong> AbhiNik is committed to
                     providing top-notch lift maintenance and support services.
-                    We prioritize safety, reliability, and customer satisfaction
-                    above all.
                   </p>
                   <p>
                     <strong>📍 Address:</strong> 123, Abhinik Towers, Mumbai,
@@ -126,18 +141,23 @@ const ContactUs = () => {
             </div>
           </Col>
 
-          {/* Right Card - Form */}
-          <Col md={6} className="d-flex justify-content-center" style={{ padding: 0 }}>
+          {/* Contact Form */}
+          <Col xs={12} lg={6} className="d-flex justify-content-center">
             <div
-              className={`card-wrapper ${hoveredCard === "right" ? "hover-right" : ""}`}
+              className={`card-wrapper ${
+                hoveredCard === "right" ? "hover-right" : ""
+              }`}
               onMouseEnter={() => setHoveredCard("right")}
               onMouseLeave={() => setHoveredCard(null)}
             >
               <Card className="shadow border-0 h-100">
                 <Card.Body>
-                  <h4 className="text-center mb-4">Mail Us Your Query</h4>
+                  <h4 className="text-center mb-4">
+                    Mail Us Your Query
+                  </h4>
+
                   <Form ref={form} onSubmit={sendEmail}>
-                    <Form.Group className="mb-3" controlId="formName">
+                    <Form.Group className="mb-3">
                       <Form.Label>Name</Form.Label>
                       <Form.Control
                         type="text"
@@ -147,7 +167,7 @@ const ContactUs = () => {
                       />
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formLiftAddress">
+                    <Form.Group className="mb-3">
                       <Form.Label>Lift Address</Form.Label>
                       <Form.Control
                         type="text"
@@ -157,7 +177,7 @@ const ContactUs = () => {
                       />
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formMessage">
+                    <Form.Group className="mb-3">
                       <Form.Label>Message</Form.Label>
                       <Form.Control
                         as="textarea"
@@ -168,7 +188,7 @@ const ContactUs = () => {
                       />
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formEmail">
+                    <Form.Group className="mb-3">
                       <Form.Label>Your Email</Form.Label>
                       <Form.Control
                         type="email"
@@ -180,7 +200,11 @@ const ContactUs = () => {
                     </Form.Group>
 
                     <div className="text-center">
-                      <Button variant="primary" type="submit" disabled={isSubmitting}>
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        disabled={isSubmitting}
+                      >
                         {isSubmitting ? (
                           <>
                             <Spinner
@@ -202,7 +226,7 @@ const ContactUs = () => {
           </Col>
         </Row>
 
-        {/* WhatsApp Section */}
+        {/* WhatsApp */}
         <hr className="mt-5" />
         <div className="text-center mt-4">
           <h5>Contact Us on WhatsApp</h5>
@@ -217,6 +241,7 @@ const ContactUs = () => {
           </a>
         </div>
       </Container>
+
       <CustomerFooter />
     </>
   );

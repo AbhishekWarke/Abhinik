@@ -2,33 +2,96 @@ import React from "react";
 
 function ContractBased() {
   return (
-    <div className="container">
-      <div className="row mt-5 mb-5">
-        <h2 className="text-muted mt-5 text-center">Contract Based Services</h2>
-        <p className="mt-4" style={{ fontSize: "1.2rem", fontWeight: "300" }}>
-          AbhiNik Elevators also offers comprehensive contract-based services, primarily through Annual Maintenance Contracts (AMC), 
-          with an option for half-yearly contracts as per the customer's preference. These contracts are designed to provide long-term, 
-          reliable service, ensuring that your elevators run smoothly year-round, minimizing unexpected breakdowns and reducing long-term 
-          maintenance costs.
-        </p>
-        <p className="mt-4" style={{ fontSize: "1.2rem", fontWeight: "300" }}>
-          The price of the AMC contract depends on various factors, including the type of elevator and its specifications. To maintain 
-          transparency, we conduct a thorough routine inspection of the elevator prior to finalizing the contract. This check ensures that 
-          there is no pre-existing damage or wear that could affect the performance and safety of your lift system. It also helps us better 
-          understand the specific needs of your elevator, so we can provide the most appropriate and cost-effective maintenance solutions.
-        </p>
-        <p className="mt-4" style={{ fontSize: "1.2rem", fontWeight: "300" }}>
-          Our AMC contracts are designed to offer peace of mind, with regular servicing, prompt repairs, and priority service. Whether it's 
-          routine maintenance, part replacements, or emergency services, our dedicated team is just a call away. We ensure that your elevator 
-          is always in top condition, enhancing its lifespan and providing uninterrupted service.
-        </p>
-        <p className="mt-4" style={{ fontSize: "1.2rem", fontWeight: "300" }}>
-          To provide complete transparency and trust, we also offer clear contract terms, specifying services included and any additional 
-          charges. Our commitment to quality and customer satisfaction ensures that you get the best value from our contract-based services.
-          Reach out to us today to get a customized AMC quote for your elevator and enjoy hassle-free service and maintenance.
-        </p>
-      </div>
-    </div>
+    <>
+      <section className="contract-section">
+        <div className="container contract-inner">
+          <span className="contract-badge">Long-Term Protection</span>
+
+          <h2 className="contract-title">
+            Contract-Based Elevator Services
+          </h2>
+
+          <p className="contract-text">
+            AbhiNik offers comprehensive contract-based elevator services through
+            Annual Maintenance Contracts (AMC), with optional half-yearly plans
+            based on customer preference. These contracts are designed to deliver
+            consistent performance, long-term reliability, and reduced operational
+            risks by ensuring your elevators receive regular, expert care throughout
+            the year.
+          </p>
+
+          <p className="contract-text">
+            AMC pricing depends on factors such as elevator type, capacity, usage,
+            and technical specifications. To maintain complete transparency, our
+            team conducts a detailed inspection before finalizing any contract.
+            This assessment helps identify existing wear or risks, ensuring accurate
+            pricing and enabling us to deliver a maintenance plan tailored to your
+            lift’s exact requirements — without hidden costs or surprises.
+          </p>
+        </div>
+      </section>
+
+      {/* =========================
+          CONTRACT BASED STYLES
+      ========================== */}
+      <style>{`
+        .contract-section {
+          background-color: #ffffff;
+          padding: 4.5rem 0;
+          border-top: 1px solid #e5e7eb;
+        }
+
+        .contract-inner {
+          max-width: 820px;
+          margin: 0 auto;
+        }
+
+        .contract-badge {
+          display: inline-block;
+          background-color: #f1f5f9;
+          color: #0d6efd;
+          padding: 6px 16px;
+          border-radius: 20px;
+          font-size: 0.85rem;
+          font-weight: 500;
+          margin-bottom: 1.2rem;
+        }
+
+        .contract-title {
+          font-size: 2.2rem;
+          font-weight: 700;
+          margin-bottom: 2rem;
+          color: #212529;
+        }
+
+        .contract-text {
+          font-size: 1.15rem;
+          font-weight: 300;
+          line-height: 1.8;
+          color: #555;
+          text-align: justify;
+          margin-bottom: 1.6rem;
+        }
+
+        /* =========================
+           MOBILE RESPONSIVE
+        ========================== */
+        @media (max-width: 576px) {
+          .contract-section {
+            padding: 3rem 0;
+          }
+
+          .contract-title {
+            font-size: 1.6rem;
+          }
+
+          .contract-text {
+            font-size: 1rem;
+            line-height: 1.7;
+          }
+        }
+      `}</style>
+    </>
   );
 }
 
